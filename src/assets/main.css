@@ -1,5 +1,7 @@
 @import 'tailwindcss';
-@plugin "daisyui";
+@tailwind utilities;
+@plugin "daisyui" {
+}
 
 #app {
   max-width: 1280px;
@@ -33,4 +35,8 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+.tab-content-custom {
+  @apply border-base-300 bg-base-200 rounded-md mt-1;
 }
