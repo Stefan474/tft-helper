@@ -31,7 +31,7 @@
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
         <li><router-link to="/">Home</router-link></li>
-        <li><a>Item 3</a></li>
+        <li><router-link to="/items">Items</router-link></li>
       </ul>
     </div>
     <div class="navbar-end">

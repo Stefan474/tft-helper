@@ -23,7 +23,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-accent"><b>2-1</b></span
             >, <span class="text-error">2-2</span>,
@@ -42,7 +41,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-error">2-3</span>, <span class="text-accent"><b>2-5</b></span
             >, <span class="text-error">2-7</span>,
@@ -61,7 +59,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-error">3-1</span>, <span class="text-accent"><b>3-2</b></span
             >, <span class="text-error">3-5</span>
@@ -79,7 +76,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-warning">3-5</span>, <span class="text-accent"><b>4-1</b></span
             >, <span class="text-error">4-2</span>
@@ -98,7 +94,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-accent"><b>4-2</b></span
             >, <span class="text-accent"><b>4-5</b></span
@@ -122,7 +117,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-error">5-1</span>, <span class="text-warning">5-2</span>,
             <span class="text-warning">5-5</span>, <span class="text-accent"><b>6-1</b></span
@@ -143,7 +137,6 @@ defineProps({
 
       <div class="list-col-grow">
         <div>
-           
           <p class="text-lg">
             <span class="text-warning">Stage 6+</span>
           </p>
