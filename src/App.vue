@@ -1,5 +1,5 @@
 <template>
-  <div class="app flex-col justify-center mx-auto">
+  <div class="app flex-col justify-center">
     <NavBar />
     <router-view />
   </div>

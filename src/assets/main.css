@@ -6,6 +6,10 @@
 
 #app {
   font-weight: normal;
+}
+
+body {
+  margin: 0px;
   width: 100%;
 }
 
@@ -30,9 +34,11 @@ a,
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0px;
   }
 }
 

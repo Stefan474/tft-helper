@@ -12,6 +12,6 @@ export default defineComponent({
 
 <template>
   <div class="home">
-    <LevelTable />
+    <LevelTable class="lg:w-1/2" />
   </div>
 </template>
