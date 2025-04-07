@@ -1,6 +1,17 @@
-<script setup lang="ts">
-import LevelTable from './components/LevelTable.vue'
-</script>
 <template>
-  <LevelTable />
+  <div class="app flex-col justify-center mx-auto">
+    <NavBar />
+    <router-view />
+  </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import NavBar from '@/components/NavBar.vue'
+export default defineComponent({
+  name: 'App',
+  components: {
+    NavBar,
+  },
+})
+</script>

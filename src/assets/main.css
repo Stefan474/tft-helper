@@ -1,13 +1,12 @@
 @import 'tailwindcss';
 @tailwind utilities;
 @plugin "daisyui" {
+  themes: dark --default;
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   font-weight: normal;
+  width: 100%;
 }
 
 a,

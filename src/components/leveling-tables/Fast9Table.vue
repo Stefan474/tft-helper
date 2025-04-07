@@ -10,9 +10,9 @@ defineProps({
 <template>
   <ul class="list bg-base-100 rounded shadow-md">
     <li class="p-2 pb-2 text-xs opacity-90 tracking-wide" :class="{ hidden: showDescription }">
-      Good in most situations. Go for this if you don't know what to play. Can pivot into
-      <b class="text-accent opacity-100">2 and 3 cost reroll</b> and
-      <b class="text-accent opacity-100">fast 8/9</b>. Good if you need multiple carries.
+      Similar to fast 8 and great for comps focusing on 5 cost units. Recommended to have at least
+      one econ augment or even two if the portal doesn't help leveling up faster. If set mechanics
+      favor fast 9 (like set 14), you can go for it without issues even with 1 econ augment.
     </li>
 
     <li class="list-row">
@@ -28,7 +28,8 @@ defineProps({
         </div>
         <div class="text-xs uppercase font-semibold">Do not roll</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
-          Buy XP on 2-1 unless terrible board or lose-streaking
+          Buy XP on 2-1 unless terrible board or lose-streaking. Considering you want to be healthy
+          you most likely want to level up ASAP and play with a strong early board.
         </p>
       </div>
     </li>
@@ -61,10 +62,9 @@ defineProps({
             >, <span class="text-error">3-5</span>
           </p>
         </div>
-        <div class="text-xs uppercase font-semibold">stay on 20-30g+ after leveling up</div>
+        <div class="text-xs uppercase font-semibold">DO NOT ROLL</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
-          Do not roll on 6 unless you have a lot of pairs or are low on health and have some pairs.
-          Don't spend more than 10-30g on rerolling unless you are low hp.
+          Only roll max 10g if you have a 2*pair for stabilization. Mostly not recommended.
         </p>
       </div>
     </li>
@@ -79,11 +79,9 @@ defineProps({
             >, <span class="text-error">4-2</span>
           </p>
         </div>
-        <div class="text-xs uppercase font-semibold">30g+ after leveling up</div>
+        <div class="text-xs uppercase font-semibold">30g+ after leveing up, DO NOT ROLL</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
-          You can level earlier in sets with strong economy (like set 14). Roll a bit if you need to
-          stabilize your board and need specific 3-stars. If you are healthy roll maybe 10g max, if
-          in risk of losing try to stabilize.
+          Try not to roll unless you have to stabilize.
         </p>
       </div>
     </li>
@@ -94,15 +92,16 @@ defineProps({
       <div class="list-col-grow">
         <div>
           <p>
-            <span class="text-warning">4-2</span>, <span class="text-accent"><b>4-5</b></span
-            >, <span class="text-accent"><b>5-1</b></span
-            >, <span class="text-warning">5-2</span>
+            <span class="text-accent"><b>4-2</b></span
+            >, <span class="text-accent"><b>4-5</b></span
+            >, <span class="text-warning">5-1</span>,
           </p>
         </div>
         <div class="text-xs uppercase font-semibold">30g+ after leveling up</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
-          Roll a lot of your gold here. Usually 30-50g+. If you are high health or were lucky to
-          have core 4* units on level 2, you can save to transition to level 9 for 5* rolls quicker.
+          Only roll if you are going to lose. If you feel you will lose fast, consider if you can
+          pivot into a fast 8 comp or stabilizing at 8 (getting key 4 cost units to 2 star) and then
+          going for 9. Try not to go under 30 gold if possible.
         </p>
       </div>
     </li>
@@ -113,16 +112,16 @@ defineProps({
       <div class="list-col-grow">
         <div>
           <p>
-            <span class="text-error">5-1</span>, <span class="text-warning">5-2</span>,
-            <span class="text-accent"><b>5-5</b></span
-            >, <span class="text-accent"><b>6-1</b></span
-            >, <span class="text-warning">6-5</span>
+            <span class="text-error">4-2</span>, <span class="text-warning">4-5</span>,
+            <span class="text-accent"><b>5-1</b></span
+            >, <span class="text-accent"><b>5-2</b></span
+            >, <span class="text-warning">5-5</span>
           </p>
         </div>
-        <div class="text-xs uppercase font-semibold">Go for end-game board</div>
+        <div class="text-xs uppercase font-semibold">Establish end game board</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
-          Roll most gold and stabilize here unless you have a reason to go to level 10 like going
-          for a prismatic trait (10 unit vertical) or a different exodia comp in specific metas.
+          Roll everything to get your 5 cost level 2 units unless you are going for a prismatic
+          trait or something specific that needs level 10.
         </p>
       </div>
     </li>
@@ -139,7 +138,8 @@ defineProps({
         <div class="text-xs uppercase font-semibold">Luxury upgrade</div>
         <p class="list-col-wrap text-xs mt-0.5 opacity-70" :class="{ hidden: showDescription }">
           Only go for this if you can't realistically get 3* upgrades on level 9 or if you are going
-          for a specific trait breakpoint.
+          for a specific trait breakpoint. Not recommended before you have at least all needed level
+          2 5 star units or you know exactly what you're doing.
         </p>
       </div>
     </li>
