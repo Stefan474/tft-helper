@@ -26,7 +26,7 @@ onMounted(async () => {
           <div class="w-12 rounded-xl">
             <img
               v-if="item.asset_route"
-              :src="'public/assets/item_images/' + item.asset_route + '.png'"
+              :src="'/assets/item_images/' + item.asset_route + '.png'"
               :alt="item.component + ' item icon'"
             />
           </div>
