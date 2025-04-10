@@ -24,7 +24,13 @@ interface CompletedItem {
 <template>
   <ul class="flex flex-wrap gap-2 justify-center">
     <li v-for="item in itemData" :key="item.id" class="flex flex-col gap-2">
-      <div class="flex justify-center">{{ item.name }}</div>
+      <div class="flex justify-center">
+        {{ item.name }}
+        <img
+          :src="'/assets/item_images/' + item.asset_route + '.png'"
+          class="w-10 rounded-lg border-2 border-base-200"
+        />
+      </div>
     </li>
   </ul>
 </template>
