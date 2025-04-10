@@ -20,6 +20,7 @@ defineProps({
             v-if="item.asset_route"
             :src="'/assets/item_images/' + item.asset_route + '.png'"
             :alt="item.component + ' item icon'"
+            class="w-11"
           />
         </div>
         <h2 class="card-title ml-2">{{ item.component }}</h2>

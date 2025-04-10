@@ -29,6 +29,7 @@ onMounted(async () => {
 <template>
   <div class="p-4 h-full flex-col">
     <div v-if="loading" class="flex justify-center py-8">
+      <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
 
