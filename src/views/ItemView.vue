@@ -4,7 +4,7 @@ import ComponentMixer from '@/components/items/ComponentMixer.vue'
 </script>
 
 <template>
-  <div class="item-view">
+  <div class="item-view flex justify-center">
     <ComponentMixer />
     <CompletedItems />
   </div>

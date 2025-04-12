@@ -16,6 +16,8 @@ const itemCombos = ref<ComponentItem[]>([])
 
 const currentItem = ref<ComponentItem>()
 
+const selectedItems = ref<ComponentItem[]>([])
+
 const loading = ref(true) // track loading state
 
 onMounted(async () => {
@@ -27,7 +29,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-4 h-full flex-col">
+  <div class="p-4 h-full w-full flex-col">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
@@ -48,6 +50,11 @@ onMounted(async () => {
               showWindow = false
             }
           "
+          @click="
+            () => {
+              selectedItems.push(item)
+            }
+          "
         >
           <div class="w-11 rounded-xl border-2 border-base-200">
             <img
@@ -66,5 +73,25 @@ onMounted(async () => {
         </div>
       </li>
     </ul>
+    <div class="mt-4 gap-2 w-60">
+      <ul class="flex gap-1 flex-wrap w-half">
+        <li
+          v-for="item in selectedItems"
+          :key="item.id"
+          class="relative"
+          @click="selectedItems.splice(selectedItems.indexOf(item), 1)"
+        >
+          <div class="avatar">
+            <div class="w-11 rounded-xl border-2 border-base-200">
+              <img
+                v-if="item.asset_route"
+                :src="'/assets/item_images/' + item.asset_route + '.png'"
+                :alt="item.component + ' item icon'"
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
