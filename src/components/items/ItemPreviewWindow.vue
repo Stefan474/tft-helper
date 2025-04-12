@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="card bg-base-300 w-54 shadow-sm border-1 border-amber-200 mt-4">
+  <div class="card bg-base-300 w-64 shadow-sm border-1 border-amber-200 mt-1 min-h-fit">
     <div class="card-body pb-0 border-b-base-100 border-b-1 p-2">
       <div class="avatar">
         <div class="w-11 rounded-xl border-2 border-base-200">
