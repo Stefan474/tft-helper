@@ -19,20 +19,28 @@ defineProps({
           <img
             v-if="item.asset_route"
             :src="'/assets/item_images/' + item.asset_route + '.png'"
-            :alt="item.component + ' item icon'"
+            :alt="item.name || item.component + ' item icon'"
             class="w-11"
           />
         </div>
-        <h2 class="card-title ml-2">{{ item.component }}</h2>
+        <h2 class="card-title ml-2">
+          {{ item.name || item.component }}
+        </h2>
       </div>
-      <p>+{{ item.stat_value }} {{ item.stat_type }} <br /></p>
-      <div class="card-actions justify-end"></div>
-    </div>
-    <div class="card-body" v-if="item.description">
-      <p class="font-bold">
-        {{ item.description }}
+      <p v-if="item.stat_type && item.stat_value">+{{ item.stat_value }} {{ item.stat_type }}</p>
+      <p v-if="item.stats">
+        <!-- Display stats as key-value pairs if the 'stats' object exists -->
+        <span v-for="(value, key) in item.stats" :key="key"> {{ key }}: {{ value }}  </span>
       </p>
       <div class="card-actions justify-end"></div>
+    </div>
+    <div
+      class="card-body align-items-left p-2 pt-1 pb-2"
+      v-if="item.item_description || item.description"
+    >
+      <p class="text-left min-w-full">
+        {{ item.item_description || item.description }}
+      </p>
     </div>
   </div>
 </template>
