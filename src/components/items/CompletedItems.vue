@@ -27,13 +27,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-4 h-full flex-col">
+  <div class="p-4 w-full flex justify-center">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
 
-    <ul v-else class="flex gap-1 flex-wrap justify-center">
+    <ul v-else class="flex gap-1 flex-wrap w-120 justify-center">
       <li v-for="item in itemData" :key="item.id" class="relative">
         <div
           class="avatar"
