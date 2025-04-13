@@ -1,6 +1,6 @@
 <template>
-  <div class="app flex-col justify-center">
-    <NavBar />
+  <NavBar />
+  <div class="app lg:px-32">
     <router-view />
   </div>
 </template>

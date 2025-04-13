@@ -29,13 +29,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-4 h-full w-full flex-col">
+  <div class="p-4 h-full w-full flex justify-center">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
 
-    <ul v-else class="flex gap-1 flex-wrap justify-center">
+    <ul v-else class="flex gap-1 flex-wrap justify-center w-120">
       <li v-for="item in itemCombos" :key="item.id" class="relative">
         <div
           class="avatar"
@@ -73,8 +73,10 @@ onMounted(async () => {
         </div>
       </li>
     </ul>
-    <div class="mt-4 gap-2 w-60">
-      <ul class="flex gap-1 flex-wrap w-half">
+  </div>
+  <div class="grid grid-cols-2 grid-flow-row">
+    <div class="mt-4 gap-2 w-60 flex justify-center">
+      <ul class="flex gap-1 flex-wrap py-2">
         <li
           v-for="item in selectedItems"
           :key="item.id"
@@ -93,5 +95,6 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
+    <div>placeholder for something</div>
   </div>
 </template>

@@ -11,7 +11,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="home">
+  <div class="home flex justify-center">
     <LevelTable class="lg:w-1/2" />
   </div>
 </template>
