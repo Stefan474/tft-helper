@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { supabase } from '../../supabase'
 import ItemPreviewWindow from './ItemPreviewWindow.vue'
 import { useItemStore } from '@/stores/itemStore.ts'
+import ItemsLogic from './ItemsLogic.vue'
 
 interface ComponentItem {
   id: number
@@ -19,14 +20,14 @@ const itemCombos = ref<ComponentItem[]>([])
 
 const currentItem = ref<ComponentItem>()
 
-const selectedItems = ref<ComponentItem[]>([])
+// const selectedItems = ref<ComponentItem[]>([])
 
 const loading = ref(true) // track loading state
 
-function assItemSelection(item: ComponentItem) {
+/*function addItemSelection(item: ComponentItem) {
   store.addSelectedItem(item)
   //add conditional adding items
-}
+}*/
 
 onMounted(async () => {
   const { data, error } = await supabase.from('component_list').select('*')
@@ -37,7 +38,7 @@ onMounted(async () => {
     itemCombos.value = data as ComponentItem[]
   }
 
-  loading.value = false // ✅ Done loading
+  loading.value = false // Done loading
 })
 </script>
 
@@ -87,7 +88,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div class="grid grid-cols-2 grid-flow-row">
+  <div class="grid grid-cols-2 grid-flow-row gap-4">
     <div class="mt-4 gap-2 w-60 flex justify-center">
       <ul class="flex gap-1 flex-wrap py-2">
         <li
@@ -108,6 +109,6 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <div>placeholder for something</div>
+    <div><ItemsLogic /></div>
   </div>
 </template>
