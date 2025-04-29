@@ -23,6 +23,11 @@ const selectedItems = ref<ComponentItem[]>([])
 
 const loading = ref(true) // track loading state
 
+function assItemSelection(item: ComponentItem) {
+  store.addSelectedItem(item)
+  //add conditional adding items
+}
+
 onMounted(async () => {
   const { data, error } = await supabase.from('component_list').select('*')
 
@@ -60,7 +65,7 @@ onMounted(async () => {
           "
           @click="
             () => {
-              selectedItems.push(item)
+              store.addSelectedItem(item)
             }
           "
         >
@@ -86,10 +91,10 @@ onMounted(async () => {
     <div class="mt-4 gap-2 w-60 flex justify-center">
       <ul class="flex gap-1 flex-wrap py-2">
         <li
-          v-for="item in selectedItems"
-          :key="item.id"
+          v-for="(item, index) in store.selectedItems"
+          :key="index"
           class="relative"
-          @click="selectedItems.splice(selectedItems.indexOf(item), 1)"
+          @click="store.removeSelectedItem(index)"
         >
           <div class="avatar">
             <div class="w-11 rounded-xl border-2 border-base-200">
@@ -104,18 +109,5 @@ onMounted(async () => {
       </ul>
     </div>
     <div>placeholder for something</div>
-    <ul class="flex gap-1 flex-wrap py-2">
-      <li v-for="item in store.itemCombos" :key="item.id" class="relative">
-        <div class="avatar">
-          <div class="w-11 rounded-xl border-2 border-base-200">
-            <img
-              v-if="item.asset_route"
-              :src="'/assets/item_images/' + item.asset_route + '.png'"
-              :alt="item.component + ' item icon'"
-            />
-          </div>
-        </div>
-      </li>
-    </ul>
   </div>
 </template>

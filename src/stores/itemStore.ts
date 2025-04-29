@@ -21,8 +21,8 @@ export const useItemStore = defineStore('itemStore', () => {
     selectedItems.value.push(item)
   }
 
-  function removeSelectedItem(itemId: number) {
-    selectedItems.value = selectedItems.value.filter(item => item.id !== itemId)
+  function removeSelectedItem(index: number) {
+    selectedItems.value.splice(index, 1)
   }
 
   function setItemCombos(combos: Item[][]) {
