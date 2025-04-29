@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '../../supabase'
 import ItemPreviewWindow from './ItemPreviewWindow.vue'
+import { useItemStore } from '@/stores/itemStore.ts'
 
 interface ComponentItem {
   id: number
@@ -9,6 +10,8 @@ interface ComponentItem {
   stat_type: string
   asset_route: string
 }
+
+const store = useItemStore()
 
 const showWindow = ref(false)
 
@@ -22,9 +25,14 @@ const loading = ref(true) // track loading state
 
 onMounted(async () => {
   const { data, error } = await supabase.from('component_list').select('*')
-  if (error) console.error('Supabase error:', error)
-  else if (data) itemCombos.value = data as ComponentItem[]
-  loading.value = false // done loading
+
+  if (error) {
+    console.error('Supabase error:', error)
+  } else if (data) {
+    itemCombos.value = data as ComponentItem[]
+  }
+
+  loading.value = false // ✅ Done loading
 })
 </script>
 
@@ -96,5 +104,18 @@ onMounted(async () => {
       </ul>
     </div>
     <div>placeholder for something</div>
+    <ul class="flex gap-1 flex-wrap py-2">
+      <li v-for="item in store.itemCombos" :key="item.id" class="relative">
+        <div class="avatar">
+          <div class="w-11 rounded-xl border-2 border-base-200">
+            <img
+              v-if="item.asset_route"
+              :src="'/assets/item_images/' + item.asset_route + '.png'"
+              :alt="item.component + ' item icon'"
+            />
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
