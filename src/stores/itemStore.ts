@@ -8,13 +8,23 @@ export interface Item {
   asset_route: string
 }
 
+interface CompletedItem {
+  id: number
+  name: string
+  component_1_id: number
+  component_2_id: number
+  stats: Record<string, string>
+  asset_route: string
+  item_description: string
+}
+
 export const useItemStore = defineStore('itemStore', () => {
   // 🔹 State
   const selectedItems = ref<Item[]>([])
-  const itemCombos = ref<Item[][]>([]) // or a custom type if combos have structure
+  const completedItems = ref<CompletedItem[]>([]) // built items
 
   // 🔹 Getters
-  const comboCount = computed(() => itemCombos.value.length)
+  const comboCount = computed(() => completedItems.value.length)
 
   // 🔹 Actions
   function addSelectedItem(item: Item) {
@@ -25,16 +35,27 @@ export const useItemStore = defineStore('itemStore', () => {
     selectedItems.value.splice(index, 1)
   }
 
-  function setItemCombos(combos: Item[][]) {
-    itemCombos.value = combos
+  function removeSelectedItemById(id: number) {
+    const index = selectedItems.value.findIndex(item => item.id === id)
+    if (index !== -1) selectedItems.value.splice(index, 1)
+  }
+
+  function setItemCombos(combos: CompletedItem[]) {
+    completedItems.value = combos
+  }
+
+  function addItemCombo(combo: CompletedItem) {
+    completedItems.value.push(combo)
   }
 
   return {
     selectedItems,
-    itemCombos,
+    completedItems,
     comboCount,
     addSelectedItem,
     removeSelectedItem,
     setItemCombos,
+    removeSelectedItemById,
+    addItemCombo
   }
 })

@@ -17,7 +17,6 @@ interface CompletedItem {
 const store = useItemStore()
 const showWindow = ref(false)
 const itemData = ref<CompletedItem[]>([])
-const builtItems = ref<CompletedItem[]>([])
 const currentItem = ref<CompletedItem>()
 const loading = ref(true) // track loading state
 
@@ -46,8 +45,11 @@ const filteredItems = computed(() => {
     return combos.has(itemCombo)
   })
 })
-function buildItem(item) {
-  //TODO
+
+function buildItem(item: CompletedItem) {
+  store.removeSelectedItemById(item.component_1_id)
+  store.removeSelectedItemById(item.component_2_id)
+  store.addItemCombo(item)
 }
 </script>
 
@@ -59,7 +61,46 @@ function buildItem(item) {
     </div>
 
     <ul v-else class="flex gap-1 flex-wrap w-120 justify-center">
-      <li v-for="item in filteredItems" :key="item.id" class="relative">
+      <li v-for="item in filteredItems" :key="item.id" class="relative" @click="buildItem(item)">
+        <div
+          class="avatar"
+          @mouseenter="
+            () => {
+              currentItem = item
+              showWindow = true
+            }
+          "
+          @mouseleave="
+            () => {
+              showWindow = false
+            }
+          "
+        >
+          <div class="w-11 rounded-xl border-2 border-base-200">
+            <img
+              v-if="item.asset_route"
+              :src="'/assets/item_images/' + item.asset_route + '.png'"
+              :alt="item.name + ' item icon'"
+            />
+          </div>
+
+          <div
+            v-if="showWindow && currentItem?.id === item.id"
+            class="absolute top-full left-1/2 -translate-x-1 z-10"
+          >
+            <ItemPreviewWindow :showWindow="showWindow" :item="item" />
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="flex gap-1 flex-wrap w-120 justify-center">
+      <li
+        v-for="item in store.completedItems"
+        :key="item.id"
+        class="relative"
+        @click="buildItem(item)"
+      >
         <div
           class="avatar"
           @mouseenter="
