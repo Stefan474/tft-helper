@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { supabase } from '../../supabase'
 import ItemPreviewWindow from './ItemPreviewWindow.vue'
+import { useItemStore } from '@/stores/itemStore.ts'
 
 interface CompletedItem {
   id: number
@@ -13,8 +14,10 @@ interface CompletedItem {
   item_description: string
 }
 
+const store = useItemStore()
 const showWindow = ref(false)
 const itemData = ref<CompletedItem[]>([])
+const builtItems = ref<CompletedItem[]>([])
 const currentItem = ref<CompletedItem>()
 const loading = ref(true) // track loading state
 
@@ -24,6 +27,28 @@ onMounted(async () => {
   else if (data) itemData.value = data as CompletedItem[]
   loading.value = false // done loading
 })
+
+//filtering logic for the items
+const filteredItems = computed(() => {
+  const selected = store.selectedItems
+  const combos = new Set<string>()
+
+  // Generate all unique 2-item combinations
+  for (let i = 0; i < selected.length; i++) {
+    for (let j = i + 1; j < selected.length; j++) {
+      const combo = [selected[i].id, selected[j].id].sort().join(',')
+      combos.add(combo)
+    }
+  }
+
+  return itemData.value.filter((item) => {
+    const itemCombo = [item.component_1_id, item.component_2_id].sort().join(',')
+    return combos.has(itemCombo)
+  })
+})
+function buildItem(item) {
+  //TODO
+}
 </script>
 
 <template>
@@ -34,7 +59,7 @@ onMounted(async () => {
     </div>
 
     <ul v-else class="flex gap-1 flex-wrap w-120 justify-center">
-      <li v-for="item in itemData" :key="item.id" class="relative">
+      <li v-for="item in filteredItems" :key="item.id" class="relative">
         <div
           class="avatar"
           @mouseenter="
