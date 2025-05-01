@@ -5,7 +5,7 @@ import ComponentMixer from '@/components/items/ComponentMixer.vue'
 
 <template>
   <div class="item-view flex flex-wrap justify-center">
-    <ComponentMixer />
+    <ComponentMixer :showSelectedItems="true" :showCompletedItems="true" />
     <CompletedItems />
   </div>
 </template>

@@ -4,6 +4,17 @@ import { supabase } from '../../supabase'
 import ItemPreviewWindow from './ItemPreviewWindow.vue'
 import { useItemStore } from '@/stores/itemStore.ts'
 
+defineProps({
+  showSelectedItems: {
+    type: Boolean,
+    default: false,
+  },
+  showCompletedItems: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 interface ComponentItem {
   id: number
   component: string
@@ -42,7 +53,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-4 h-full w-full flex justify-center">
+  <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
@@ -87,7 +98,7 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div class="grid grid-cols-2 grid-flow-row gap-4">
+  <div v-if="showCompletedItems" class="grid grid-cols-2 grid-flow-row gap-4">
     <div class="mt-4 gap-2 w-60 flex justify-center">
       <ul class="flex gap-1 flex-wrap py-2">
         <li
