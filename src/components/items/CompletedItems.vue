@@ -83,46 +83,6 @@ function buildItem(item: CompletedItem) {
               :alt="item.name + ' item icon'"
             />
           </div>
-
-          <div
-            v-if="showWindow && currentItem?.id === item.id"
-            class="absolute top-full left-1/2 -translate-x-1 z-10"
-          >
-            <ItemPreviewWindow :showWindow="showWindow" :item="item" />
-          </div>
-        </div>
-      </li>
-    </ul>
-
-    <ul class="flex gap-1 flex-wrap w-120 justify-center">
-      <li
-        v-for="item in store.completedItems"
-        :key="item.id"
-        class="relative"
-        @click="buildItem(item)"
-      >
-        <div
-          class="avatar"
-          @mouseenter="
-            () => {
-              currentItem = item
-              showWindow = true
-            }
-          "
-          @mouseleave="
-            () => {
-              showWindow = false
-            }
-          "
-        >
-          <div class="w-11 rounded-xl border-2 border-base-200">
-            <img
-              v-if="item.asset_route"
-              :src="'/assets/item_images/' + item.asset_route + '.png'"
-              :alt="item.name + ' item icon'"
-            />
-          </div>
-
           <div
             v-if="showWindow && currentItem?.id === item.id"
             class="absolute top-full left-1/2 -translate-x-1 z-10"

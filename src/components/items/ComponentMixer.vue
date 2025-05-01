@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue'
 import { supabase } from '../../supabase'
 import ItemPreviewWindow from './ItemPreviewWindow.vue'
 import { useItemStore } from '@/stores/itemStore.ts'
-import ItemsLogic from './ItemsLogic.vue'
 
 interface ComponentItem {
   id: number
@@ -109,6 +108,31 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <div><ItemsLogic /></div>
+    <div class="mt-4 gap-2 w-60 flex justify-center">
+      <ul class="flex gap-1 flex-wrap py-2">
+        <li
+          v-for="(item, index) in store.completedItems"
+          :key="index"
+          class="relative"
+          @click="store.removeSelectedItem(index)"
+        >
+          <div class="avatar">
+            <div class="w-11 rounded-xl border-2 border-base-200">
+              <img
+                v-if="item.asset_route"
+                :src="'/assets/item_images/' + item.asset_route + '.png'"
+                :alt="item.name + ' item icon'"
+              />
+            </div>
+            <div
+              v-if="showWindow && currentItem?.id === item.id"
+              class="absolute top-full left-1/2 -translate-x-1 z-10"
+            >
+              <ItemPreviewWindow :showWindow="showWindow" :item="item" />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
