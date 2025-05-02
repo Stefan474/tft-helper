@@ -8,14 +8,14 @@
           sites.
         </p>
         <button class="btn btn-primary">Make a comp</button>
-        <button class="btn btn-secondary mx-2">Import comps</button>
+        <button class="btn btn-success mx-2">Import comps</button>
       </div>
     </div>
-    <div class="w-1/2 bg-accent h-lvh">
+    <div class="w-1/2 bg-base-300 h-lvh">
       <img
-        src="@/assets/hero-image.png"
-        alt="teamfight tactics the game"
-        class="h-full w-full object-cover object-bottom"
+        src="@/assets/transparent-hero.png"
+        alt="teamfight tactics cover image"
+        class="w-full h-full object-right"
       />
     </div>
   </div>
