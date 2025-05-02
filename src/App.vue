@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <div class="app lg:px-32">
+  <div class="app">
     <router-view />
   </div>
 </template>
