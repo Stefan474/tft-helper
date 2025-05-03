@@ -53,12 +53,12 @@ onMounted(async () => {
 </script>
 
 <template>
+  <p class="">Components</p>
   <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
-
     <ul v-else class="flex gap-1 flex-wrap justify-center w-120">
       <li v-for="item in itemCombos" :key="item.id" class="relative">
         <div
@@ -98,8 +98,14 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div v-if="showSelectedItems" class="grid grid-cols-2 grid-flow-row gap-4">
-    <div class="mt-4 gap-2 w-60 flex justify-center">
+  <div
+    v-if="showSelectedItems"
+    class="grid grid-cols-1 grid-flow-row gap-4 justify-items-stretch md:grid-cols-2"
+  >
+    <div
+      class="mt-4 gap-2 w-62 flex-col bg-base-200 p-1 min-h-48 border-2 border-base-200 rounded-xl"
+    >
+      <p class="font-bold text-center">Selected Items</p>
       <ul class="flex gap-1 flex-wrap py-2">
         <li
           v-for="(item, index) in store.selectedItems"
@@ -119,14 +125,13 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <div class="mt-4 gap-2 w-60 flex justify-center">
+
+    <div
+      class="mt-4 gap-2 w-62 flex-col justify-center p-1 bg-base-300 border-2 border-base-200 rounded-xl"
+    >
+      <div class="font-bold text-center">Completed Items</div>
       <ul class="flex gap-1 flex-wrap py-2">
-        <li
-          v-for="(item, index) in store.completedItems"
-          :key="index"
-          class="relative"
-          @click="store.removeSelectedItem(index)"
-        >
+        <li v-for="(item, index) in store.completedItems" :key="index" class="relative">
           <div class="avatar">
             <div class="w-11 rounded-xl border-2 border-base-200">
               <img

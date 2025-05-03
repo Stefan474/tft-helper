@@ -54,43 +54,46 @@ function buildItem(item: CompletedItem) {
 </script>
 
 <template>
-  <div class="p-4 w-full flex justify-center">
+  <div class="w-124 flex mt-2">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
 
-    <ul v-else class="flex gap-1 flex-wrap w-120 justify-center">
-      <li v-for="item in filteredItems" :key="item.id" class="relative" @click="buildItem(item)">
-        <div
-          class="avatar"
-          @mouseenter="
-            () => {
-              currentItem = item
-              showWindow = true
-            }
-          "
-          @mouseleave="
-            () => {
-              showWindow = false
-            }
-          "
-        >
-          <div class="w-11 rounded-xl border-2 border-base-200">
-            <img
-              v-if="item.asset_route"
-              :src="'/assets/item_images/' + item.asset_route + '.png'"
-              :alt="item.name + ' item icon'"
-            />
-          </div>
+    <div>
+      <div class="font-bold">Build Options</div>
+      <ul class="grid grid-cols-10 gap-1 grid-rows-5 min-h-52">
+        <li v-for="item in filteredItems" :key="item.id" class="relative" @click="buildItem(item)">
           <div
-            v-if="showWindow && currentItem?.id === item.id"
-            class="absolute top-full left-1/2 -translate-x-1 z-10"
+            class="avatar"
+            @mouseenter="
+              () => {
+                currentItem = item
+                showWindow = true
+              }
+            "
+            @mouseleave="
+              () => {
+                showWindow = false
+              }
+            "
           >
-            <ItemPreviewWindow :showWindow="showWindow" :item="item" />
+            <div class="w-11 rounded-xl border-2 border-base-200">
+              <img
+                v-if="item.asset_route"
+                :src="'/assets/item_images/' + item.asset_route + '.png'"
+                :alt="item.name + ' item icon'"
+              />
+            </div>
+            <div
+              v-if="showWindow && currentItem?.id === item.id"
+              class="absolute top-full left-1/2 -translate-x-1 z-10"
+            >
+              <ItemPreviewWindow :showWindow="showWindow" :item="item" />
+            </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>

@@ -28,7 +28,9 @@ export const useItemStore = defineStore('itemStore', () => {
 
   // 🔹 Actions
   function addSelectedItem(item: Item) {
-    selectedItems.value.push(item)
+    if (selectedItems.value.length < 15)
+      selectedItems.value.push(item)
+    else alert('You can only select 15 items at a time')
   }
 
   function removeSelectedItem(index: number) {
@@ -45,7 +47,9 @@ export const useItemStore = defineStore('itemStore', () => {
   }
 
   function addItemCombo(combo: CompletedItem) {
-    completedItems.value.push(combo)
+    if (completedItems.value.length < 15)
+      completedItems.value.push(combo)
+    else alert('You can only build 15 items at a time')
   }
 
   return {

@@ -4,7 +4,6 @@ import BuilderMain from '@/components/builder/BuilderMain.vue'
 
 <template>
   <div>
-    <h1>Create a Sheet</h1>
     <BuilderMain />
   </div>
 </template>
