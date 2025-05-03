@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import BoardSim from '@/components/builder/BoardSim.vue'
 
 const tabTracker = ref(1)
 </script>
@@ -26,7 +27,9 @@ const tabTracker = ref(1)
             <li class="step" @click="tabTracker = 5">Step 5</li>
           </ul>
         </div>
-        <div class="mt-5 text-center">Content for Tab 1</div>
+        <div class="mt-5 text-center">
+          <BoardSim />
+        </div>
       </div>
 
       <!-- Tab 2 -->

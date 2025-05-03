@@ -13,7 +13,7 @@ const router = useRouter()
           sites.
         </p>
         <button class="btn btn-primary" @click="router.push('/create')">Make a comp</button>
-        <button class="btn btn-success mx-2">Import comps</button>
+        <button class="btn btn-success mx-2">Check example comps</button>
       </div>
     </div>
     <div class="w-1/2 bg-base-300 h-lvh lg:block hidden position-absolute right-0">
