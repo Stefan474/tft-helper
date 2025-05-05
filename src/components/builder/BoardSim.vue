@@ -42,7 +42,7 @@ const filteredChampions = computed(() => {
   )
 })
 
-function handleBoardDrop(event) {
+function handleBoardDrop(event: any) {
   const { added } = event
 
   if (!added) return
@@ -107,35 +107,36 @@ function onEnd(event: any) {
 
 <template>
   <!-- Board draggable -->
-  <draggable
-    :list="board"
-    class="flex flex-wrap gap-2 items-center pt-5 board-container"
-    tag="ul"
-    :group="{ name: 'champions', put: true }"
-    item-key="x"
-    @change="handleBoardDrop"
-    :move="(event) => true"
-  >
-    <template #item="{ element }">
-      <div
-        class="hex w-16 bg-base-200 flex items-center justify-center text-sm font-bold border border-base-300 board-field"
-        :class="{ 'has-champion': element.champion }"
-      >
-        <template v-if="element.champion">
-          <img
-            :src="'/assets/tft-champion/' + element.champion.asset_path + '.png'"
-            :alt="element.champion.name + ' champion icon'"
-            class="object-cover object-right h-full w-full"
-          />
-        </template>
-        <template v-else>
-          {{ element.something }}
-        </template>
-      </div>
-    </template>
-  </draggable>
+  <div class="flex flex-col items-center">
+    <draggable
+      :list="board"
+      class="flex flex-wrap gap-2 items-center pt-5 board-container w-2/3"
+      tag="ul"
+      :group="{ name: 'champions', put: true }"
+      item-key="x"
+      @change="handleBoardDrop"
+      :move="(event) => true"
+    >
+      <template #item="{ element }">
+        <div
+          class="hex w-16 bg-base-200 flex items-center justify-center text-sm font-bold border border-base-300 board-field"
+          :class="{ 'has-champion': element.champion }"
+        >
+          <template v-if="element.champion">
+            <img
+              :src="'/assets/tft-champion/' + element.champion.asset_path + '.png'"
+              :alt="element.champion.name + ' champion icon'"
+              class="object-cover object-right h-full w-full"
+            />
+          </template>
+          <template v-else>
+            {{ element.something }}
+          </template>
+        </div>
+      </template>
+    </draggable>
+  </div>
 
-  >
   <div v-if="loading" class="w-124 flex mt-2">
     <div class="flex justify-center py-8">
       <!--Loading until data is fetched-->
