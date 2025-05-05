@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { supabase } from '../../supabase'
 import { onMounted, ref, computed } from 'vue'
+import draggable from 'vuedraggable'
+
+//CHAMP SELECT STUFF
 
 const champFilter = ref('')
 
@@ -57,19 +60,23 @@ const filteredChampions = computed(() => {
         v-model="champFilter"
       />
     </label>
-    <div class="flex w-full max-w-4xl gap-1 flex-wrap justify-start mt-5">
-      <ul v-for="champion in filteredChampions" :key="champion.id" class="flex gap-2 max-w-4xl">
+    <draggable
+      v-model="filteredChampions"
+      tag="ul"
+      class="flex w-full max-w-4xl gap-1 flex-wrap justify-start mt-5"
+    >
+      <template #item="{ element }">
         <li>
           <div class="w-15 rounded-xl border-2 border-base-200 h-15">
             <img
-              v-if="champion.asset_path"
-              :src="'/assets/tft-champion/' + champion.asset_path + '.png'"
-              :alt="champion.name + ' champion icon'"
+              v-if="element.asset_path"
+              :src="'/assets/tft-champion/' + element.asset_path + '.png'"
+              :alt="element.name + ' champion icon'"
               class="object-right object-cover h-full rounded-xl"
             />
           </div>
         </li>
-      </ul>
-    </div>
+      </template>
+    </draggable>
   </div>
 </template>
