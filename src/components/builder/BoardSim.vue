@@ -42,7 +42,7 @@ const filteredChampions = computed(() => {
   )
 })
 
-function handleBoardDrop(event: any) {
+function handleBoardDrop(event: change) {
   const { added } = event
 
   if (!added) return
@@ -74,18 +74,13 @@ const board = ref<Field[]>(
   })),
 )
 
-// Group fields into rows of 7
-const rows = computed(() =>
-  Array.from({ length: 4 }, (_, rowIndex) => board.value.slice(rowIndex * 7, rowIndex * 7 + 7)),
-)
-
-function onStart(event: any) {
+function onStart(event: start) {
   // Add a class to the body during drag operations
   document.body.classList.add('dragging-champion')
 }
 
 // Add this function to handle the end of dragging
-function onEnd(event: any) {
+function onEnd(event: end) {
   // Remove the class when dragging ends
   document.body.classList.remove('dragging-champion')
 
@@ -115,7 +110,6 @@ function onEnd(event: any) {
       :group="{ name: 'champions', put: true }"
       item-key="x"
       @change="handleBoardDrop"
-      :move="(event) => true"
     >
       <template #item="{ element }">
         <div
