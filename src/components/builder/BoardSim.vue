@@ -11,7 +11,7 @@ interface Champion {
   trait3: string
   asset_path: string
 }
-interface Field {
+export interface Field {
   x: number
   something: string
   champion?: Champion | null
@@ -26,6 +26,7 @@ const board = ref<Field[]>(
     champion: null,
   })),
 )
+
 const fieldTracker = ref<number | null>(null)
 const draggedChampion = ref<Champion | null>(null)
 
@@ -186,6 +187,10 @@ function removeChampion(champion?: Champion | null) {
     const field = board.value.find((f) => f.champion?.id === champion.id)
     if (field) field.champion = null
   }
+}
+
+function useBoard() {
+  return { board }
 }
 </script>
 
