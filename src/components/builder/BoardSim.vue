@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { supabase } from '@/supabase'
 
 const champFilter = ref('')
-
 interface Champion {
   id: number
   name: string
@@ -16,80 +14,179 @@ interface Champion {
 interface Field {
   x: number
   something: string
-  champion?: Champion
+  champion?: Champion | null
 }
 
 const championList = ref<Champion[]>([])
-const loading = ref(true) // track loading state
-
-const fieldTracker = ref(0)
-
-//drag and drop functionality
-const draggedChampion = ref<Champion>()
-
-function onDragStart(Champion: Champion) {
-  draggedChampion.value = Champion
-  console.log(draggedChampion.value)
-}
-
-function onDragStartField(field: Field) {
-  draggedChampion.value = field.champion
-  fieldTracker.value = field.x
-}
-
-function onDragEnter(x: number) {
-  const field = board.value.find((field) => field.x === x)
-  if (field) {
-  }
-}
-
-function onDrop(x: number) {
-  console.log('hello i am dropping')
-  const field = board.value.find((field) => field.x === x)
-  if (field) {
-    field.champion = draggedChampion.value
-    draggedChampion.value = undefined
-    board.value[fieldTracker.value].champion = undefined
-    console.log(board.value[fieldTracker.value].champion)
-  }
-}
-
+const loading = ref(true)
 const board = ref<Field[]>(
   Array.from({ length: 28 }, (_, i) => ({
     x: i,
     something: `${i + 1}`,
+    champion: null,
   })),
 )
+const fieldTracker = ref<number | null>(null)
+const draggedChampion = ref<Champion | null>(null)
 
-// fetch champion data from supabase
 onMounted(async () => {
   const { data, error } = await supabase.from('champion_list').select('*')
-
-  if (error) {
-    console.error('Supabase error:', error)
-  } else if (data) {
-    championList.value = data as Champion[]
-  }
-
-  loading.value = false // Done loading
+  if (error) console.error('Supabase error:', error)
+  else if (data) championList.value = data as Champion[]
+  loading.value = false
 })
 
-// Group fields into rows of 7
 const rows = computed(() =>
   Array.from({ length: 4 }, (_, rowIndex) => board.value.slice(rowIndex * 7, rowIndex * 7 + 7)),
 )
 
-// filter champions by search input
 const filteredChampions = computed(() => {
   const filter = champFilter.value.toLowerCase().trim()
   if (!filter) return championList.value
-
-  return championList.value.filter((champion) =>
-    [champion.name, champion.trait1, champion.trait2, champion.trait3].some((field) =>
-      field?.toLowerCase().includes(filter),
-    ),
+  return championList.value.filter((c) =>
+    [c.name, c.trait1, c.trait2, c.trait3].some((f) => f?.toLowerCase().includes(filter)),
   )
 })
+
+// ——— SVG-based drag preview helper ———
+const DRAG_IMG_SIZE = 64
+
+function createSvgDragImage(path: string): SVGSVGElement {
+  const svgNS = 'http://www.w3.org/2000/svg'
+  const size = DRAG_IMG_SIZE
+
+  const svg = document.createElementNS(svgNS, 'svg')
+  svg.setAttribute('width', `${size}`)
+  svg.setAttribute('height', `${size}`)
+  svg.style.position = 'absolute'
+  svg.style.top = '-9999px'
+  svg.style.left = '-9999px'
+
+  // defs + hex clipPath …
+  const defs = document.createElementNS(svgNS, 'defs')
+  const clipPath = document.createElementNS(svgNS, 'clipPath')
+  const clipId = `hexClip-${Math.random().toString(36).slice(2)}`
+  clipPath.setAttribute('id', clipId)
+  const poly = document.createElementNS(svgNS, 'polygon')
+  poly.setAttribute(
+    'points',
+    [
+      [size * 0.25, 0],
+      [size * 0.75, 0],
+      [size, size * 0.5],
+      [size * 0.75, size],
+      [size * 0.25, size],
+      [0, size * 0.5],
+    ]
+      .map(([x, y]) => `${x},${y}`)
+      .join(' '),
+  )
+  clipPath.appendChild(poly)
+  defs.appendChild(clipPath)
+  svg.appendChild(defs)
+
+  // image element: cover + right-align via preserveAspectRatio
+  const img = document.createElementNS(svgNS, 'image')
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', path)
+  img.setAttribute('width', `${size}`)
+  img.setAttribute('height', `${size}`)
+  img.setAttribute('clip-path', `url(#${clipId})`)
+  img.setAttribute('preserveAspectRatio', 'xMaxYMid slice')
+  svg.appendChild(img)
+
+  document.body.appendChild(svg)
+  return svg
+}
+
+// ——— Drag from champion list ———
+function onDragStart(champion: Champion, event: DragEvent) {
+  if (!event.dataTransfer) return
+  event.dataTransfer.effectAllowed = 'move'
+  draggedChampion.value = champion
+  fieldTracker.value = null
+  document.body.classList.add('dragging')
+
+  const path = `/assets/tft-champion/${champion.asset_path}.png`
+  const svgEl = createSvgDragImage(path)
+  event.dataTransfer.setDragImage(svgEl, DRAG_IMG_SIZE / 2, DRAG_IMG_SIZE / 2)
+
+  requestAnimationFrame(() => {
+    if (document.body.contains(svgEl)) document.body.removeChild(svgEl)
+  })
+}
+
+// ——— Drag from existing field ———
+function onDragStartField(field: Field, event: DragEvent) {
+  if (!field.champion || !event.dataTransfer) {
+    event.preventDefault()
+    return
+  }
+  draggedChampion.value = field.champion
+  fieldTracker.value = field.x
+  document.body.classList.add('dragging')
+
+  const path = `/assets/tft-champion/${field.champion.asset_path}.png`
+  const svgEl = createSvgDragImage(path)
+  event.dataTransfer.setDragImage(svgEl, DRAG_IMG_SIZE / 2, DRAG_IMG_SIZE / 2)
+
+  requestAnimationFrame(() => {
+    if (document.body.contains(svgEl)) document.body.removeChild(svgEl)
+  })
+}
+
+// ——— Drop & swap logic ———
+function onDrop(x: number, event?: DragEvent) {
+  const targetField = board.value.find((f) => f.x === x)
+  if (!targetField) return
+
+  if (fieldTracker.value === null) {
+    targetField.champion = draggedChampion.value
+  } else {
+    const source = board.value.find((f) => f.x === fieldTracker.value)
+    if (source && source !== targetField) {
+      const tmp = targetField.champion
+      targetField.champion = source.champion
+      source.champion = tmp
+    }
+  }
+
+  if (event?.currentTarget) {
+    ;(event.currentTarget as HTMLElement).classList.remove('field-highlight')
+  }
+  draggedChampion.value = null
+  fieldTracker.value = null
+}
+
+function onDragEnter(event: DragEvent) {
+  if (event.currentTarget) (event.currentTarget as HTMLElement).classList.add('field-highlight')
+}
+function onDragLeave(event: DragEvent) {
+  if (event.currentTarget) (event.currentTarget as HTMLElement).classList.remove('field-highlight')
+}
+
+function onDragOverHex(event: DragEvent) {
+  event.preventDefault() // keep the drop zone active
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move'
+  }
+}
+
+function onDragEnd() {
+  document.body.classList.remove('dragging')
+}
+
+function addDragging(champion?: Champion | null) {
+  if (champion) {
+    document.body.classList.add('dragging')
+  }
+}
+
+function removeChampion(champion?: Champion | null) {
+  if (champion) {
+    const field = board.value.find((f) => f.champion?.id === champion.id)
+    if (field) field.champion = null
+  }
+}
 </script>
 
 <template>
@@ -99,18 +196,22 @@ const filteredChampions = computed(() => {
       :key="rowIndex"
       class="flex gap-2"
       :class="{
-        'ml-8': rowIndex === 1 || rowIndex === 3, // offset rows 2 and 4
+        'ml-8': rowIndex === 1 || rowIndex === 3,
       }"
     >
       <div
         v-for="field in row"
         :key="field.x"
         class="hex w-16 bg-base-200 flex items-center justify-center text-sm font-bold border border-base-300"
-        draggable="true"
-        @dragover.prevent
-        @drop="onDrop(field.x)"
-        @dragenter="onDragEnter(field.x)"
-        @dragstart="onDragStartField(field)"
+        :draggable="!!field.champion"
+        @dragover="onDragOverHex($event)"
+        @drop="onDrop(field.x, $event)"
+        @dragstart="onDragStartField(field, $event)"
+        @dragenter="onDragEnter($event)"
+        @dragleave="onDragLeave($event)"
+        @mouseleave="onDragEnd()"
+        @mouseover="addDragging(field.champion)"
+        @dblclick="removeChampion(field.champion)"
       >
         <img
           v-if="field.champion"
@@ -121,13 +222,13 @@ const filteredChampions = computed(() => {
       </div>
     </div>
   </div>
-  <!--Start of champion list-->
+
   <div v-if="loading" class="w-124 flex mt-2">
     <div class="flex justify-center py-8">
-      <!-- conditional loading until data is fetched-->
-      <span className="loading loading-bars loading-lg"></span>
+      <span class="loading loading-bars loading-lg"></span>
     </div>
   </div>
+
   <div v-else>
     <label class="floating-label mt-7">
       <span>Search</span>
@@ -144,7 +245,10 @@ const filteredChampions = computed(() => {
           <div
             class="w-15 rounded-xl border-2 border-base-200 h-15"
             draggable="true"
-            @drag="onDragStart(champion)"
+            @dragstart="onDragStart(champion, $event)"
+            @dragend="onDragEnd()"
+            @mouseleave="onDragEnd()"
+            @mouseover="addDragging(champion)"
           >
             <img
               v-if="champion.asset_path"
@@ -163,5 +267,17 @@ const filteredChampions = computed(() => {
 .hex {
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   aspect-ratio: 1 / 1;
+}
+
+.field-highlight {
+  filter: brightness(1.5);
+  border: 2px 0px solid #4fd1c5 !important;
+}
+</style>
+
+<style>
+body.dragging,
+body.dragging .hex {
+  cursor: grabbing !important;
 }
 </style>
