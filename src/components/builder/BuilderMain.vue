@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import BoardSim from '@/components/builder/BoardSim.vue'
+import ChampionItems from '@/components/builder/ChampionItems.vue'
 import type { Field } from '@/components/builder/BoardSim.vue'
 
 export interface CompData {
@@ -41,7 +42,7 @@ const isValidName = computed(() => {
   return true
 })
 
-function validateSubmit(compData: CompData) {
+function validateSubmitOne(compData: CompData) {
   const checks = [
     {
       condition: compData.name === '',
@@ -74,6 +75,7 @@ function validateSubmit(compData: CompData) {
       return false
     }
   }
+  tabTracker.value = 2
 
   return true
 }
@@ -139,7 +141,7 @@ const tabTracker = ref(1)
         <div class="w-full flex justify-center mt-5">
           <button
             class="btn btn-primary align-right"
-            @click="validateSubmit(compData)"
+            @click="validateSubmitOne(compData)"
             :disabled="!isValid || !isValidName"
           >
             Next Step
@@ -172,6 +174,9 @@ const tabTracker = ref(1)
           Drag the champions onto the board and build your end-board. <br />
           Double click to remove a champion from the board.
           <BoardSim />
+          <button class="btn btn-secondary mt-4" @click="() => console.log('Get Board')">
+            Get Board
+          </button>
         </div>
       </div>
 
@@ -194,7 +199,7 @@ const tabTracker = ref(1)
             <li class="step" @click="tabTracker = 5">Step 5</li>
           </ul>
         </div>
-        <div class="mt-5 text-center">Content for Tab 3</div>
+        <div class="mt-5 text-center"><ChampionItems /></div>
       </div>
 
       <!-- Tab 4 -->

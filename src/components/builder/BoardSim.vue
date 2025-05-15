@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { supabase } from '@/supabase'
+import { useBoardStore } from '@/stores/boardStore'
 
 const champFilter = ref('')
 interface Champion {
@@ -27,6 +28,20 @@ const board = ref<Field[]>(
   })),
 )
 
+const boardStore = useBoardStore()
+
+function syncToStore() {
+  boardStore.setBoard(board.value)
+}
+
+watch(
+  board,
+  (newBoard) => {
+    boardStore.setBoard(newBoard)
+  },
+  { deep: true },
+)
+
 const fieldTracker = ref<number | null>(null)
 const draggedChampion = ref<Champion | null>(null)
 
@@ -35,6 +50,9 @@ onMounted(async () => {
   if (error) console.error('Supabase error:', error)
   else if (data) championList.value = data as Champion[]
   loading.value = false
+
+  // Sync the board with the store
+  syncToStore()
 })
 
 const rows = computed(() =>
@@ -187,10 +205,6 @@ function removeChampion(champion?: Champion | null) {
     const field = board.value.find((f) => f.champion?.id === champion.id)
     if (field) field.champion = null
   }
-}
-
-function useBoard() {
-  return { board }
 }
 </script>
 
