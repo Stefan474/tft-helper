@@ -9,6 +9,7 @@ export interface Champion {
   trait2: string
   trait3: string
   asset_path: string
+  items?: string[]
 }
 
 export interface Field {

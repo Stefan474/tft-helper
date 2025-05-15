@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, inject } from 'vue'
 import { supabase } from '@/supabase'
 import { useBoardStore } from '@/stores/boardStore'
 
@@ -11,6 +11,7 @@ interface Champion {
   trait2: string
   trait3: string
   asset_path: string
+  items?: string[]
 }
 export interface Field {
   x: number
@@ -200,6 +201,12 @@ function removeChampion(champion?: Champion | null) {
     if (field) field.champion = null
   }
 }
+
+const tabTracker = inject('tabTracker', ref(2))
+function nextStep() {
+  boardStore.setBoard(board.value)
+  tabTracker.value = 3
+}
 </script>
 
 <template>
@@ -273,6 +280,9 @@ function removeChampion(champion?: Champion | null) {
         </li>
       </ul>
     </div>
+    <div>
+      <button class="btn btn-primary mt-4" @click="nextStep()">Next</button>
+    </div>
   </div>
 </template>
 
@@ -292,5 +302,9 @@ function removeChampion(champion?: Champion | null) {
 body.dragging,
 body.dragging .hex {
   cursor: grabbing !important;
+}
+.hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  aspect-ratio: 1 / 1;
 }
 </style>

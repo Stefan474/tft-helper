@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, provide } from 'vue'
 import BoardSim from '@/components/builder/BoardSim.vue'
 import ChampionItems from '@/components/builder/ChampionItems.vue'
 import type { Field } from '@/components/builder/BoardSim.vue'
@@ -81,6 +81,7 @@ function validateSubmitOne(compData: CompData) {
 }
 
 const tabTracker = ref(1)
+provide('tabTracker', tabTracker)
 </script>
 
 <template>
@@ -96,7 +97,7 @@ const tabTracker = ref(1)
         :checked="tabTracker === 1"
         @change="tabTracker = 1"
       />
-      <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
+      <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
             <li class="step step-primary" @click="tabTracker = 1">Info</li>
@@ -189,7 +190,7 @@ const tabTracker = ref(1)
         :checked="tabTracker === 3"
         @change="tabTracker = 3"
       />
-      <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
+      <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
             <li class="step step-primary" @click="tabTracker = 1">Step 1</li>
