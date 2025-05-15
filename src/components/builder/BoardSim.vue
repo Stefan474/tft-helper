@@ -30,10 +30,6 @@ const board = ref<Field[]>(
 
 const boardStore = useBoardStore()
 
-function syncToStore() {
-  boardStore.setBoard(board.value)
-}
-
 watch(
   board,
   (newBoard) => {
@@ -50,9 +46,7 @@ onMounted(async () => {
   if (error) console.error('Supabase error:', error)
   else if (data) championList.value = data as Champion[]
   loading.value = false
-
   // Sync the board with the store
-  syncToStore()
 })
 
 const rows = computed(() =>

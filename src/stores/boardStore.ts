@@ -31,6 +31,7 @@ export const useBoardStore = defineStore('board', () => {
   // Actions
   function setBoard(newBoard: Field[]) {
     board.value = newBoard
+    console.log('Board updated:', board.value)
   }
 
   function updateField(x: number, updates: Partial<Field>) {
