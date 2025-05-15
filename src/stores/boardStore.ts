@@ -9,7 +9,7 @@ export interface Champion {
   trait2: string
   trait3: string
   asset_path: string
-  items?: string[]
+  itemIds?: [number?, number?, number?]
 }
 
 export interface Field {
@@ -33,6 +33,27 @@ export const useBoardStore = defineStore('board', () => {
   function setBoard(newBoard: Field[]) {
     board.value = newBoard
     console.log('Board updated:', board.value)
+  }
+
+  function addItemToChampion(x: number, item: number) {
+    const fieldIndex = board.value.findIndex(field => field.x === x)
+    if (fieldIndex !== -1 && board.value[fieldIndex].champion) {
+      const champion = board.value[fieldIndex].champion
+      if (!champion.itemIds) {
+        champion.itemIds = [item]
+
+      } else if (champion.itemIds.length < 3) {
+        champion.itemIds.push(item)
+
+      } else {
+        console.error('Champion already has 3 items')
+        return
+      }
+    } else {
+      console.error('Field not found or no champion in this field')
+      return
+    }
+
   }
 
   function updateField(x: number, updates: Partial<Field>) {
@@ -65,6 +86,7 @@ export const useBoardStore = defineStore('board', () => {
     updateField,
     addChampion,
     removeChampion,
-    resetBoard
+    resetBoard,
+    addItemToChampion
   }
 })

@@ -52,18 +52,27 @@ onMounted(async () => {
   </p>
 
   <div class="flex">
-    <ul class="lg:w-1/2 flex flex-wrap justify-start h-fit gap-3">
+    <ul class="lg:w-1/2 flex flex-wrap justify-start h-fit gap-12">
       <li v-for="field in boardData.filter((f) => f.champion)" :key="field.x">
-        <div>
+        <div class="relative">
           <img
             :src="'/assets/tft-champion/' + field.champion!.asset_path + '.png'"
             alt="Champion Image"
-            class="hex w-22 h-22 object-cover object-right"
+            class="hex w-24 h-24 object-cover object-right"
           />
+          <div
+            class="w-24 h-8 absolute bottom-[-10px] left-0 grid grid-cols-3 grid-rows-1 gap-1 translate-"
+          >
+            <div class="bg-gray-800 border-primary border-2 w-8 h-full"></div>
+            <div class="bg-gray-800 border-primary border-2 w-8 h-full"></div>
+            <div class="bg-gray-800 border-primary border-2 w-8 h-full"></div>
+          </div>
         </div>
       </li>
     </ul>
-    <div class="mx-auto bg-base-300 p-3 rounded-xl border-2 border-primary">
+    <div
+      class="mx-auto bg-base-300 p-3 rounded-xl border-2 border-primary min-h-[calc(44px*11+10px*8+84px)]"
+    >
       <label class="floating-label mt-4">
         <span>Search</span>
         <input
@@ -85,5 +94,5 @@ onMounted(async () => {
       </ul>
     </div>
   </div>
-  <button class="btn" @click="() => console.log(boardData)">Get Board</button>
+  <button class="btn" @click="() => (tabTracker = 4)">Next</button>
 </template>
