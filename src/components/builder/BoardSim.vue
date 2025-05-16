@@ -154,6 +154,18 @@ function onDrop(x: number, event?: DragEvent) {
   if (!targetField) return
 
   if (fieldTracker.value === null) {
+    const id = draggedChampion.value?.id
+    // if that champ.id is already on another field, block it
+    if (id != null && board.value.some((f) => f.champion?.id === id)) {
+      alert('You cannot place a champion that’s already on the board.')
+      if (event?.currentTarget) {
+        ;(event.currentTarget as HTMLElement).classList.remove('field-highlight')
+      }
+      draggedChampion.value = null
+      fieldTracker.value = null
+      return
+    }
+    // otherwise, assign it
     targetField.champion = draggedChampion.value
   } else {
     const source = board.value.find((f) => f.x === fieldTracker.value)
@@ -167,6 +179,7 @@ function onDrop(x: number, event?: DragEvent) {
   if (event?.currentTarget) {
     ;(event.currentTarget as HTMLElement).classList.remove('field-highlight')
   }
+
   draggedChampion.value = null
   fieldTracker.value = null
 }

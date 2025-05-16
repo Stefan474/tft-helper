@@ -2,6 +2,7 @@
 import { ref, computed, provide } from 'vue'
 import BoardSim from '@/components/builder/BoardSim.vue'
 import ChampionItems from '@/components/builder/ChampionItems.vue'
+import ItemPriority from '@/components/builder/ItemPriority.vue'
 import type { Field } from '@/components/builder/BoardSim.vue'
 
 export interface CompData {
@@ -222,7 +223,7 @@ provide('tabTracker', tabTracker)
             <li class="step" @click="tabTracker = 5">Step 5</li>
           </ul>
         </div>
-        <div class="mt-5 text-center">Content for Tab 4</div>
+        <div class="mt-5 text-center"><ItemPriority /></div>
       </div>
 
       <!-- Tab 5 -->

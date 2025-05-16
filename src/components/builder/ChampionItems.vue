@@ -93,6 +93,16 @@ function onDrop(event: DragEvent, field: Field, index: number) {
 function removeChampionItem(field: Field, index: number) {
   const id = field.champion?.itemIds[index]
   if (id == null || id === 999) return
+
+  // if there's no remaining copy, it's still in priority
+  const existsInRemaining = itemStore.remainingItems.some((item) => item.id === id)
+  if (!existsInRemaining) {
+    alert(
+      'You cannot remove a priority item, please remove the item from your priority item list first',
+    )
+    return
+  }
+
   itemStore.removeBoardItem(id)
   field.champion!.itemIds[index] = 999
 }

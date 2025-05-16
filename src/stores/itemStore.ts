@@ -25,9 +25,26 @@ export const useItemStore = defineStore('itemStore', () => {
   const completedItems = ref<CompletedItem[]>([]) // built items
   const boardItems = ref<CompletedItem[]>([]) // items on the board
   const allCompletedItems = ref<CompletedItem[]>([]) // all items
+  const priorityItems = ref<CompletedItem[]>([]) // items with priority
+
 
   // 🔹 Getters
   const comboCount = computed(() => completedItems.value.length)
+
+  const remainingItems = computed(() => {
+    // start with all board items
+    const rem = [...boardItems.value]
+    // remove exactly one match per priority item
+    priorityItems.value.forEach(p => {
+      const idx = rem.findIndex(item => item.id === p.id)
+      if (idx !== -1) rem.splice(idx, 1)
+    })
+    return rem
+  })
+
+  const boardItemComponents = computed(() => {
+    return boardItems.value.map(item => item.component_1_id)
+  })
 
   // 🔹 Actions
   function addSelectedItem(item: Item) {
@@ -71,12 +88,38 @@ export const useItemStore = defineStore('itemStore', () => {
     }
   }
 
+  function addPriorityItem(item: CompletedItem) {
+    // limit total priority items
+    if (priorityItems.value.length >= 6) {
+      alert('You can only have 6 priority items at a time')
+      return
+    }
+    // ensure there's a remaining copy on the board
+    if (!remainingItems.value.some(i => i.id === item.id)) {
+      alert(`You cannot add more ${item.name} to priority if you don't have that many on the board.`)
+      return
+    }
+    // add to priority
+    priorityItems.value.push(item)
+  }
+
+  function removePriorityItem(item: CompletedItem) {
+    const idx = priorityItems.value.findIndex(i => i.id === item.id)
+    if (idx !== -1) {
+      priorityItems.value.splice(idx, 1)
+    }
+  }
+
   return {
     selectedItems,
     completedItems,
     comboCount,
     boardItems,
     allCompletedItems,
+    priorityItems,
+    remainingItems,
+    addPriorityItem,
+    removePriorityItem,
     removeBoardItem,
     addBoardItem,
     addSelectedItem,
