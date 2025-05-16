@@ -138,6 +138,7 @@ function removeChampionItem(field: Field, index: number) {
               class="bg-gray-800 border-primary border-2 w-8 h-full"
               @dragover.prevent
               @drop="(e) => onDrop(e, field, 1)"
+              @dblclick="removeChampionItem(field, 1)"
             >
               <img
                 v-if="field.champion?.itemIds[1] && field.champion?.itemIds[1] !== 999"
@@ -154,6 +155,7 @@ function removeChampionItem(field: Field, index: number) {
               class="bg-gray-800 border-primary border-2 w-8 h-full"
               @dragover.prevent
               @drop="(e) => onDrop(e, field, 2)"
+              @dblclick="removeChampionItem(field, 2)"
             >
               <img
                 v-if="field.champion?.itemIds[2] && field.champion?.itemIds[2] !== 999"
@@ -198,9 +200,6 @@ function removeChampionItem(field: Field, index: number) {
         </li>
       </ul>
     </div>
-    <li v-for="item in itemStore.boardItems" :key="item.id">
-      {{ item.name }} x{{ item.item_description }}
-    </li>
   </div>
 
   <button class="btn" @click="() => (tabTracker = 4)">Next</button>
