@@ -9,7 +9,7 @@ export interface Champion {
   trait2: string
   trait3: string
   asset_path: string
-  itemIds?: [number?, number?, number?]
+  itemIds: [number?, number?, number?]
 }
 
 export interface Field {
@@ -33,6 +33,13 @@ export const useBoardStore = defineStore('board', () => {
   function setBoard(newBoard: Field[]) {
     board.value = newBoard
     console.log('Board updated:', board.value)
+    for (const field of board.value) {
+      if (field.champion) {
+        if (!field.champion.itemIds) {
+          field.champion.itemIds = [999, 999, 999]
+        }
+      }
+    }
   }
 
   function addItemToChampion(x: number, item: number) {

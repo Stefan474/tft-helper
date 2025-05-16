@@ -11,7 +11,7 @@ interface Champion {
   trait2: string
   trait3: string
   asset_path: string
-  itemIds?: [number?, number?, number?]
+  itemIds: [999, 999, 999]
 }
 export interface Field {
   x: number

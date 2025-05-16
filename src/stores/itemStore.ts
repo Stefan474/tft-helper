@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
+
 export interface Item {
   id: number
   component: string
@@ -22,6 +23,8 @@ export const useItemStore = defineStore('itemStore', () => {
   // 🔹 State
   const selectedItems = ref<Item[]>([])
   const completedItems = ref<CompletedItem[]>([]) // built items
+  const boardItems = ref<CompletedItem[]>([]) // items on the board
+  const allCompletedItems = ref<CompletedItem[]>([]) // all items
 
   // 🔹 Getters
   const comboCount = computed(() => completedItems.value.length)
@@ -52,10 +55,30 @@ export const useItemStore = defineStore('itemStore', () => {
     else alert('You can only build 15 items at a time')
   }
 
+  function addBoardItem(id: number) {
+    console.log('checking for item with id:', id)
+    const item = allCompletedItems.value.find(item => item.id === id)
+    if (item) {
+      boardItems.value.push(item)
+    }
+  }
+
+  function removeBoardItem(id: number) {
+    const index = boardItems.value.findIndex(item => item.id === id)
+    if (index !== -1) {
+      boardItems.value.splice(index, 1)
+      console.log('current board items:', boardItems.value)
+    }
+  }
+
   return {
     selectedItems,
     completedItems,
     comboCount,
+    boardItems,
+    allCompletedItems,
+    removeBoardItem,
+    addBoardItem,
     addSelectedItem,
     removeSelectedItem,
     setItemCombos,
