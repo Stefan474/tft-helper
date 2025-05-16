@@ -3,7 +3,7 @@ import { onMounted, ref, inject, watch, computed } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import { supabase } from '@/supabase'
 import type { Field } from '@/stores/boardStore'
-import { useItemStore } from '@/stores/itemStore'
+import { useItemStore, type Item } from '@/stores/itemStore'
 
 interface CompletedItem {
   id: number
@@ -45,7 +45,14 @@ onMounted(async () => {
     itemData.value = data as CompletedItem[]
     loading.value = false
     itemStore.allCompletedItems = data as CompletedItem[]
-  } // done loading
+  }
+})
+onMounted(async () => {
+  const { data, error } = await supabase.from('component_list').select('*')
+  if (error) console.error('Supabase error:', error)
+  else if (data) {
+    itemStore.allComponents = data as Item[]
+  }
 })
 
 const itemsData = computed(() => {

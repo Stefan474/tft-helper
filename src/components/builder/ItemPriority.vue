@@ -42,13 +42,12 @@ const itemStore = useItemStore()
     <div class="bg-base-200 rounded-xl p-4 border-2 border-primary">
       <h3 class="text-lg mb-4">Component priority</h3>
       <ul class="grid grid-cols-8 gap-1 w-fit">
-        <li v-for="(item, index) in itemStore.priorityItems" :key="index">
+        <li v-for="item in itemStore.boardComponents" :key="item.id">
           <div>
             <img
               :src="'/assets/item_images/' + item.asset_route + '.png'"
               alt="Item Image"
               class="w-11 rounded-xl border-2 border-base-200"
-              @click="itemStore.removePriorityItem(item)"
             />
           </div>
         </li>

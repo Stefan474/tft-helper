@@ -26,10 +26,20 @@ export const useItemStore = defineStore('itemStore', () => {
   const boardItems = ref<CompletedItem[]>([]) // items on the board
   const allCompletedItems = ref<CompletedItem[]>([]) // all items
   const priorityItems = ref<CompletedItem[]>([]) // items with priority
-
+  const allComponents = ref<Item[]>([]) // all components
 
   // 🔹 Getters
-  const comboCount = computed(() => completedItems.value.length)
+
+  const boardComponents = computed(() => {
+    return boardItems.value.flatMap(item => {
+      // lookup each component by ID; may return undefined if missing
+      const comp1 = allComponents.value.find(c => c.id === item.component_1_id)
+      const comp2 = allComponents.value.find(c => c.id === item.component_2_id)
+      return [comp1, comp2]
+    })
+      // filter out any not found
+      .filter((c): c is Item => Boolean(c))
+  })
 
   const remainingItems = computed(() => {
     // start with all board items
@@ -42,9 +52,6 @@ export const useItemStore = defineStore('itemStore', () => {
     return rem
   })
 
-  const boardItemComponents = computed(() => {
-    return boardItems.value.map(item => item.component_1_id)
-  })
 
   // 🔹 Actions
   function addSelectedItem(item: Item) {
@@ -113,11 +120,12 @@ export const useItemStore = defineStore('itemStore', () => {
   return {
     selectedItems,
     completedItems,
-    comboCount,
     boardItems,
     allCompletedItems,
     priorityItems,
     remainingItems,
+    allComponents,
+    boardComponents,
     addPriorityItem,
     removePriorityItem,
     removeBoardItem,
