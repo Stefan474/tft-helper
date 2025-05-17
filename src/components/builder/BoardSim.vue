@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, inject } from 'vue'
+import { ref, computed, onMounted, watch, defineEmits } from 'vue'
 import { supabase } from '@/supabase'
 import { useBoardStore } from '@/stores/boardStore'
 
@@ -215,10 +215,11 @@ function removeChampion(champion?: Champion | null) {
   }
 }
 
-const tabTracker = inject('tabTracker', ref(2))
+const emitTabTracker = defineEmits(['change-tab'])
 function nextStep() {
   boardStore.setBoard(board.value)
-  tabTracker.value = 3
+
+  emitTabTracker('change-tab', 3)
 }
 </script>
 

@@ -66,7 +66,7 @@ const itemStore = useItemStore()
       </li>
     </ul>
     <!--Remaining components calc--->
-    <div v-if="itemStore.boardComponents.length !== itemStore.remainingComponentCounts.length">
+    <div v-if="itemStore.priorityComponentCounts.length > 0">
       <p class="text-left mb-1 font-bold" v-if="itemStore.remainingComponents.length > 0">
         Lower priority components
       </p>
@@ -97,7 +97,7 @@ const itemStore = useItemStore()
       </ul>
     </div>
     <!--All components calc--->
-    <div v-if="itemStore.boardComponents.length === itemStore.remainingComponentCounts.length">
+    <div v-if="!itemStore.priorityComponentCounts.length">
       <p class="text-left mb-1 font-bold">Component breakdown</p>
       <ul class="grid grid-cols-8 gap-1 w-fit">
         <li

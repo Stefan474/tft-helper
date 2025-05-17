@@ -3,11 +3,27 @@ import { ref, computed, provide } from 'vue'
 import BoardSim from '@/components/builder/BoardSim.vue'
 import ChampionItems from '@/components/builder/ChampionItems.vue'
 import ItemPriority from '@/components/builder/ItemPriority.vue'
-import type { Field } from '@/components/builder/BoardSim.vue'
+import { useBoardStore } from '@/stores/boardStore'
 
 export interface CompData {
   name: string
   levelStrategy: string
+}
+
+export interface Champion {
+  id: number
+  name: string
+  trait1: string
+  trait2: string
+  trait3: string
+  asset_path: string
+  itemIds: [number?, number?, number?]
+}
+
+export interface Field {
+  x: number
+  something: string
+  champion?: Champion | null | undefined
 }
 
 export interface CheatSheet {
@@ -81,8 +97,68 @@ function validateSubmitOne(compData: CompData) {
   return true
 }
 
+function validateSubmitTwo(board: Field[]) {
+  let championCounter = 0
+  for (const field of board) {
+    if (field.champion !== null) {
+      championCounter++
+    }
+  }
+  if (championCounter < 1) {
+    alert('Please place at least one champion on the board.')
+    tabTracker.value = 2
+    return false
+  }
+  if (championCounter > 10) {
+    alert('Please place no more than 10 champions on the board.')
+    tabTracker.value = 2
+    return false
+  }
+  return true
+}
+
+// flow control
+const boardStore = useBoardStore()
+const skipStepOne = ref(false)
+const skipStepTwo = ref(false)
 const tabTracker = ref(1)
 provide('tabTracker', tabTracker)
+
+function changeTab(index: number) {
+  if (index === 1) {
+    tabTracker.value = index
+    return
+  }
+  if (index === 2) {
+    if (skipStepOne.value) {
+      tabTracker.value = index
+      return
+    }
+    const stepOne = validateSubmitOne(compData.value)
+    if (stepOne) {
+      tabTracker.value = index
+      skipStepOne.value = true
+      return
+    }
+  }
+  if (index === 3) {
+    if (!skipStepOne.value) {
+      alert('Please fill out the form before proceeding.')
+      tabTracker.value = 1
+      return
+    }
+    if (skipStepTwo.value) {
+      tabTracker.value = index
+      return
+    }
+    const stepTwo = validateSubmitTwo(boardStore.board)
+    if (stepTwo) {
+      tabTracker.value = index
+      skipStepTwo.value = true
+      return
+    }
+  }
+}
 </script>
 
 <template>
@@ -101,11 +177,11 @@ provide('tabTracker', tabTracker)
       <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
-            <li class="step step-primary" @click="tabTracker = 1">Info</li>
-            <li class="step" @click="tabTracker = 2">Step 2</li>
-            <li class="step" @click="tabTracker = 3">Step 3</li>
-            <li class="step" @click="tabTracker = 4">Step 4</li>
-            <li class="step" @click="tabTracker = 5">Step 5</li>
+            <li class="step step-primary" @click="changeTab(1)">Info</li>
+            <li class="step" @click="changeTab(2)">Board</li>
+            <li class="step" @click="changeTab(3)">Items</li>
+            <li class="step" @click="changeTab(4)">Priority</li>
+            <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
         <div class="mt-5 flex-col gap-2 w-full justify-items-center">
@@ -163,11 +239,11 @@ provide('tabTracker', tabTracker)
       <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
-            <li class="step step-primary" @click="tabTracker = 1">Step 1</li>
-            <li class="step step-primary" @click="tabTracker = 2">Step 2</li>
-            <li class="step" @click="tabTracker = 3">Step 3</li>
-            <li class="step" @click="tabTracker = 4">Step 4</li>
-            <li class="step" @click="tabTracker = 5">Step 5</li>
+            <li class="step step-primary" @click="changeTab(1)">Info</li>
+            <li class="step step-primary" @@click="changeTab(2)">Board</li>
+            <li class="step" @click="changeTab(3)">Items</li>
+            <li class="step" @click="changeTab(4)">Priority</li>
+            <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
         <div class="text-center">
@@ -175,7 +251,7 @@ provide('tabTracker', tabTracker)
 
           Drag the champions onto the board and build your end-board. <br />
           Double click to remove a champion from the board.
-          <BoardSim />
+          <BoardSim @change-tab="changeTab" />
         </div>
       </div>
 
@@ -191,11 +267,11 @@ provide('tabTracker', tabTracker)
       <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
-            <li class="step step-primary" @click="tabTracker = 1">Step 1</li>
-            <li class="step step-primary" @click="tabTracker = 2">Step 2</li>
-            <li class="step step-primary" @click="tabTracker = 3">Step 3</li>
-            <li class="step" @click="tabTracker = 4">Step 4</li>
-            <li class="step" @click="tabTracker = 5">Step 5</li>
+            <li class="step step-primary" @click="changeTab(1)">Info</li>
+            <li class="step step-primary" @click="changeTab(2)">Board</li>
+            <li class="step step-primary" @click="changeTab(3)">Items</li>
+            <li class="step" @click="changeTab(4)">Priority</li>
+            <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
         <div class="mt-5 text-center"><ChampionItems /></div>
@@ -213,11 +289,11 @@ provide('tabTracker', tabTracker)
       <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
-            <li class="step step-primary" @click="tabTracker = 1">Step 1</li>
-            <li class="step step-primary" @click="tabTracker = 2">Step 2</li>
-            <li class="step step-primary" @click="tabTracker = 3">Step 3</li>
-            <li class="step step-primary" @click="tabTracker = 4">Step 4</li>
-            <li class="step" @click="tabTracker = 5">Step 5</li>
+            <li class="step step-primary" @click="changeTab(1)">Info</li>
+            <li class="step step-primary" @click="changeTab(2)">Board</li>
+            <li class="step step-primary" @click="changeTab(3)">Items</li>
+            <li class="step step-primary" @click="changeTab(4)">Priority</li>
+            <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
         <div class="mt-5 text-center"><ItemPriority /></div>
@@ -235,14 +311,21 @@ provide('tabTracker', tabTracker)
       <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
-            <li class="step step-primary" @click="tabTracker = 1">Step 1</li>
-            <li class="step step-primary" @click="tabTracker = 2">Step 2</li>
-            <li class="step step-primary" @click="tabTracker = 3">Step 3</li>
-            <li class="step step-primary" @click="tabTracker = 4">Step 4</li>
-            <li class="step step-primary" @click="tabTracker = 5">Step 5</li>
+            <li class="step step-primary" @click="changeTab(1)">Info</li>
+            <li class="step step-primary" @click="changeTab(2)">Board</li>
+            <li class="step step-primary" @click="changeTab(3)">Items</li>
+            <li class="step step-primary" @click="changeTab(4)">Priority</li>
+            <li class="step step-primary" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
-        <div class="mt-5 text-center">Content for Tab 5</div>
+        <div class="mt-5 text-center">
+          <h3 class="text-2xl mb-2">You're almost done!</h3>
+          <p class="text-sm mb-4">
+            You're free to go back using the numbers above and make any last minute changes.
+            <br />When you're ready, click the button below to save your build.
+          </p>
+          <button class="btn btn-secondary">Save Build</button>
+        </div>
       </div>
     </div>
   </div>
