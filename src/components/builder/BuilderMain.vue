@@ -123,13 +123,22 @@ const skipStepOne = ref(false)
 const skipStepTwo = ref(false)
 const tabTracker = ref(1)
 provide('tabTracker', tabTracker)
+const unlockTabs = ref(false)
 
 function changeTab(index: number) {
+  if (index < tabTracker.value) {
+    tabTracker.value = index
+    return
+  }
   if (index === 1) {
     tabTracker.value = index
     return
   }
   if (index === 2) {
+    if (!validateSubmitOne(compData.value)) {
+      tabTracker.value = 1
+      return
+    }
     if (skipStepOne.value) {
       tabTracker.value = index
       return
@@ -142,6 +151,10 @@ function changeTab(index: number) {
     }
   }
   if (index === 3) {
+    if (!validateSubmitOne(compData.value)) {
+      tabTracker.value = 1
+      return
+    }
     if (!skipStepOne.value) {
       alert('Please fill out the form before proceeding.')
       tabTracker.value = 1
@@ -154,9 +167,30 @@ function changeTab(index: number) {
     const stepTwo = validateSubmitTwo(boardStore.board)
     if (stepTwo) {
       tabTracker.value = index
-      skipStepTwo.value = true
+      skipStepTwo.value = false
       return
     }
+  }
+  if (index === 4) {
+    if (tabTracker.value < 3 && !skipStepOne.value) {
+      alert('Please fill out the form before proceeding.')
+      tabTracker.value = 1
+      return
+    }
+    if (!validateSubmitTwo(boardStore.board) && tabTracker.value < 3) {
+      alert('Please finish setting up your board before proceeding.')
+      tabTracker.value = 2
+      return
+    }
+    unlockTabs.value = true
+    tabTracker.value = index
+  }
+  if (index === 5) {
+    if (!unlockTabs.value) {
+      alert('Please finish setting up your composition before proceeding.')
+      return
+    }
+    tabTracker.value = index
   }
 }
 </script>
@@ -219,7 +253,7 @@ function changeTab(index: number) {
         <div class="w-full flex justify-center mt-5">
           <button
             class="btn btn-primary align-right"
-            @click="validateSubmitOne(compData)"
+            @click="changeTab(2)"
             :disabled="!isValid || !isValidName"
           >
             Next Step
@@ -240,7 +274,7 @@ function changeTab(index: number) {
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
             <li class="step step-primary" @click="changeTab(1)">Info</li>
-            <li class="step step-primary" @@click="changeTab(2)">Board</li>
+            <li class="step step-primary" @click="changeTab(2)">Board</li>
             <li class="step" @click="changeTab(3)">Items</li>
             <li class="step" @click="changeTab(4)">Priority</li>
             <li class="step" @click="changeTab(5)">Confirm</li>
@@ -330,3 +364,9 @@ function changeTab(index: number) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.step {
+  cursor: pointer;
+}
+</style>

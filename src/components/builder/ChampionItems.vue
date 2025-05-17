@@ -120,7 +120,7 @@ function removeChampionItem(field: Field, index: number) {
   <p class="mb-6 text-center">
     Put the ideal items onto your carries and champions you want to prioritize during the game.
     <br />
-    This will calculate the components you need to prioritize.
+    <span class="text-warning">Double click an item to remove it.</span>
   </p>
 
   <div class="flex">
@@ -191,7 +191,7 @@ function removeChampionItem(field: Field, index: number) {
     <div
       class="mx-auto bg-base-300 p-3 rounded-xl border-2 border-primary min-h-[calc(44px*11+10px*8+84px)]"
     >
-      <label class="floating-label mt-4">
+      <label class="floating-label mt-2">
         <span>Search</span>
         <input
           type="text"
@@ -219,5 +219,5 @@ function removeChampionItem(field: Field, index: number) {
     </div>
   </div>
 
-  <button class="btn" @click="() => (tabTracker = 4)">Next</button>
+  <button class="btn btn-primary" @click="() => (tabTracker = 4)">Next</button>
 </template>
