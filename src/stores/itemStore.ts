@@ -52,6 +52,73 @@ export const useItemStore = defineStore('itemStore', () => {
     return rem
   })
 
+  const priorityComponents = computed(() => {
+    return priorityItems.value.flatMap(item => {
+      // lookup each component by ID; may return undefined if missing
+      const comp1 = allComponents.value.find(c => c.id === item.component_1_id)
+      const comp2 = allComponents.value.find(c => c.id === item.component_2_id)
+      return [comp1, comp2]
+    })
+      // filter out any not found
+      .filter((c): c is Item => Boolean(c))
+  })
+
+  const remainingComponents = computed(() => {
+    return remainingItems.value.flatMap(item => {
+      // lookup each component by ID; may return undefined if missing
+      const comp1 = allComponents.value.find(c => c.id === item.component_1_id)
+      const comp2 = allComponents.value.find(c => c.id === item.component_2_id)
+      return [comp1, comp2]
+    })
+      // filter out any not found
+      .filter((c): c is Item => Boolean(c))
+  })
+
+  const componentCounts = computed(() => {
+    const map: Record<number, { item: Item; count: number }> = {}
+
+    boardComponents.value.forEach(item => {
+      if (map[item.id]) {
+        map[item.id].count++
+      } else {
+        map[item.id] = { item, count: 1 }
+      }
+    })
+
+    // return as an array
+    return Object.values(map)
+  })
+
+  const remainingComponentCounts = computed(() => {
+    const map: Record<number, { item: Item; count: number }> = {}
+
+    remainingComponents.value.forEach(item => {
+      if (map[item.id]) {
+        map[item.id].count++
+      } else {
+        map[item.id] = { item, count: 1 }
+      }
+    })
+
+    // return as an array
+    return Object.values(map)
+  })
+
+  const priorityComponentCounts = computed(() => {
+    const map: Record<number, { item: Item; count: number }> = {}
+
+    priorityComponents.value.forEach(item => {
+      if (map[item.id]) {
+        map[item.id].count++
+      } else {
+        map[item.id] = { item, count: 1 }
+      }
+    })
+
+    // return as an array
+    return Object.values(map)
+  })
+
 
   // 🔹 Actions
   function addSelectedItem(item: Item) {
@@ -126,6 +193,11 @@ export const useItemStore = defineStore('itemStore', () => {
     remainingItems,
     allComponents,
     boardComponents,
+    priorityComponents,
+    remainingComponents,
+    componentCounts,
+    remainingComponentCounts,
+    priorityComponentCounts,
     addPriorityItem,
     removePriorityItem,
     removeBoardItem,

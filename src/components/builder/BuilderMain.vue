@@ -176,9 +176,6 @@ provide('tabTracker', tabTracker)
           Drag the champions onto the board and build your end-board. <br />
           Double click to remove a champion from the board.
           <BoardSim />
-          <button class="btn btn-secondary mt-4" @click="() => console.log('Get Board')">
-            Get Board
-          </button>
         </div>
       </div>
 
