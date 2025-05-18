@@ -4,6 +4,8 @@ import BoardSim from '@/components/builder/BoardSim.vue'
 import ChampionItems from '@/components/builder/ChampionItems.vue'
 import ItemPriority from '@/components/builder/ItemPriority.vue'
 import { useBoardStore } from '@/stores/boardStore'
+import { useCompositionStore } from '@/stores/compositionStore'
+import ReviewData from './ReviewData.vue'
 
 export interface CompData {
   name: string
@@ -35,6 +37,8 @@ const compData = ref<CompData>({
   name: '',
   levelStrategy: '',
 })
+
+const compositionStore = useCompositionStore()
 
 // Validation logic for leveling strategy
 const isValid = computed(() => {
@@ -93,6 +97,8 @@ function validateSubmitOne(compData: CompData) {
     }
   }
   tabTracker.value = 2
+
+  compositionStore.setCompData(compData)
 
   return true
 }
@@ -155,7 +161,7 @@ function changeTab(index: number) {
       tabTracker.value = 1
       return
     }
-    if (!skipStepOne.value) {
+    if (!validateSubmitOne(compData.value)) {
       alert('Please fill out the form before proceeding.')
       tabTracker.value = 1
       return
@@ -172,7 +178,7 @@ function changeTab(index: number) {
     }
   }
   if (index === 4) {
-    if (tabTracker.value < 3 && !skipStepOne.value) {
+    if (!validateSubmitOne(compData.value)) {
       alert('Please fill out the form before proceeding.')
       tabTracker.value = 1
       return
@@ -358,6 +364,7 @@ function changeTab(index: number) {
             You're free to go back using the numbers above and make any last minute changes.
             <br />When you're ready, click the button below to save your build.
           </p>
+          <ReviewData />
           <button class="btn btn-secondary">Save Build</button>
         </div>
       </div>

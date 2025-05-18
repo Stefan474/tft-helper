@@ -9,7 +9,7 @@ export interface Item {
   asset_route: string
 }
 
-interface CompletedItem {
+export interface CompletedItem {
   id: number
   name: string
   component_1_id: number
