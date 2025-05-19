@@ -202,7 +202,7 @@ function changeTab(index: number) {
 </script>
 
 <template>
-  <div class="flex-col justify-items-center pt-5 min-h-screen px-4">
+  <div class="flex-col justify-items-center pt-5 min-h-screen px-4 bg-base-200">
     <div class="tabs tabs-lift w-full max-w-4xl">
       <!-- Tab 1 -->
 
@@ -214,7 +214,7 @@ function changeTab(index: number) {
         :checked="tabTracker === 1"
         @change="tabTracker = 1"
       />
-      <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
+      <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
             <li class="step step-primary" @click="changeTab(1)">Info</li>
@@ -304,7 +304,7 @@ function changeTab(index: number) {
         :checked="tabTracker === 3"
         @change="tabTracker = 3"
       />
-      <div class="tab-content bg-base-200 border-base-300 p-4 sm:p-6 md:p-8">
+      <div class="tab-content bg-base-100 border-base-300 p-4 sm:p-6 md:p-8">
         <div class="flex justify-center">
           <ul class="steps flex-wrap justify-center">
             <li class="step step-primary" @click="changeTab(1)">Info</li>

@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import type { Field } from '@/stores/boardStore'
 import { useItemStore } from '@/stores/itemStore'
 
+// IF THE ITEMS ARE NOT LOADING MAKE SURE TO LOAD THE ITEM STORE AND THE BOARD STORE IN THE DAHSBOARD
+
 const props = defineProps<{
   board: Field[]
 }>()
@@ -13,7 +15,6 @@ const rows = computed<Field[][]>(() =>
 )
 
 const itemStore = useItemStore()
-const emptyItems = [999, 999, 999]
 </script>
 
 <template>
@@ -39,11 +40,11 @@ const emptyItems = [999, 999, 999]
 
         <!-- positioned outside of the clipped hex -->
         <div
-          class="absolute bottom-[0px] left-0 w-16 h-4 grid grid-cols-3 gap-1 pointer-events-none z-10"
-          v-if="field.champion && field.champion.itemIds !== emptyItems"
+          class="absolute bottom-[5px] left-0 w-16 h-4 grid grid-cols-3 pointer-events-none scale-110 z-10"
+          v-if="field.champion && !field.champion.itemIds.every((id) => id === 999)"
         >
           <template v-for="slotIndex in 3" :key="slotIndex">
-            <div class="bg-gray-800 border-primary border-1 w-5 h-full">
+            <div class="bg-gray-800 border-primary border-1 w-full h-full rounded-md">
               <img
                 v-if="
                   field.champion?.itemIds[slotIndex - 1] &&
