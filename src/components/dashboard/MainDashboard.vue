@@ -22,7 +22,7 @@ onMounted(() => {
   }
 })
 
-function testFunction(sheet: CheatSheetWithItems) {
+function setCurrentSheet(sheet: CheatSheetWithItems) {
   compositionStore.setFullSheet(sheet)
   console.log('hello', sheet)
   activeSheet.value = sheet
@@ -32,7 +32,8 @@ function testFunction(sheet: CheatSheetWithItems) {
 <template>
   <div class="p-4 w-full bg-base-100 px-32">
     <div class="grid grid-cols-12 gap-4 w-full">
-      <div class="col-span-6 bg-accent p-4 pt-2 flex justify-center">
+      <div class="col-span-1"></div>
+      <div class="col-span-6 bg-base-100 p-4 pt-2 flex justify-center h-fit">
         <div class="inline-block transform origin-top">
           <div v-if="activeSheet">
             <BoardGenerator :board="activeSheet.board" />
@@ -51,15 +52,16 @@ function testFunction(sheet: CheatSheetWithItems) {
                 class="bg-base-200 p-2 mt-2"
                 v-for="sheet in compositionStore.allSavedSheets"
                 :key="sheet.compData.name"
-                @click="testFunction(sheet)"
+                @click="setCurrentSheet(sheet)"
               >
                 {{ sheet.compData.name }}
               </div>
+              <button class="btn btn-primary mt-4">Save</button>
             </div>
           </div>
         </div>
         <div class="bg-green-200">
-          <Fast8Table :show-description="true" />
+          <Fast8Table :show-description="false" />
         </div>
       </div>
     </div>

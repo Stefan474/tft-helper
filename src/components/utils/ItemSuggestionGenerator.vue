@@ -7,7 +7,10 @@ const itemStore = useItemStore()
 </script>
 
 <template>
-  <div class="bg-base-200 rounded-xl p-4 border-2 border-primary mt-4">
+  <div
+    class="bg-base-200 rounded-xl p-4 border-2 border-primary mt-4"
+    v-if="itemStore.allComponents.length > 0"
+  >
     <!--Priority components calc--->
     <p class="text-left mb-1 font-bold" v-if="itemStore.priorityComponents.length > 0">
       High priority components
@@ -88,4 +91,5 @@ const itemStore = useItemStore()
       </ul>
     </div>
   </div>
+  <div v-else class="loading loading-bars"></div>
 </template>

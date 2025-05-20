@@ -14,6 +14,7 @@ const props = defineProps<{
 
 // fetching item data
 onMounted(async () => {
+  if (itemStore.allCompletedItems.length > 0) return
   const { data, error } = await supabase.from('completed_items').select('*')
   if (error) console.error('Supabase error:', error)
   else if (data) {
@@ -21,6 +22,7 @@ onMounted(async () => {
   }
 })
 onMounted(async () => {
+  if (itemStore.allComponents.length > 0) return
   const { data, error } = await supabase.from('component_list').select('*')
   if (error) console.error('Supabase error:', error)
   else if (data) {
@@ -47,7 +49,7 @@ const itemStore = useItemStore()
       <div v-for="field in row" :key="field.x" class="relative w-16">
         <!-- clipped hex background + champion -->
         <div
-          class="hex bg-base-200 flex items-center justify-center text-sm font-bold border border-base-300"
+          class="hex bg-base-300 flex items-center justify-center text-sm font-bold border border-base-300"
         >
           <img
             v-if="field.champion"
@@ -85,6 +87,7 @@ const itemStore = useItemStore()
       </div>
     </div>
   </div>
+  <div v-else class="loading loading-bars"></div>
 </template>
 
 <style scoped>
