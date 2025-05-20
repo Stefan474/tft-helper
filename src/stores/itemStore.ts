@@ -177,12 +177,22 @@ export const useItemStore = defineStore('itemStore', () => {
     priorityItems.value.push(item)
   }
 
+
+  function setSheetItems(items: CompletedItem[], priorityItemsList: CompletedItem[]) {
+    boardItems.value = items
+    priorityItems.value = priorityItemsList
+  }
+
+
   function removePriorityItem(item: CompletedItem) {
     const idx = priorityItems.value.findIndex(i => i.id === item.id)
     if (idx !== -1) {
       priorityItems.value.splice(idx, 1)
     }
+
   }
+
+
 
   return {
     selectedItems,
@@ -198,6 +208,7 @@ export const useItemStore = defineStore('itemStore', () => {
     componentCounts,
     remainingComponentCounts,
     priorityComponentCounts,
+    setSheetItems,
     addPriorityItem,
     removePriorityItem,
     removeBoardItem,

@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
+
 <template>
   <div class="navbar bg-base-100 shadow-sm w-full px-12 sm:px-6">
     <div class="navbar-start">
@@ -29,10 +33,11 @@
       <a class="btn btn-ghost text-xl">TFT Helper</a>
     </div>
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal px-1">
+      <ul class="menu menu-horizontal px-1 gap-1">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/items">Items</router-link></li>
         <li><router-link to="/create">Create a Sheet</router-link></li>
+        <li><router-link to="/dashboard">Dashboard</router-link></li>
       </ul>
     </div>
     <div class="navbar-end">

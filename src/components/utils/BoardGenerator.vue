@@ -2,12 +2,31 @@
 import { computed } from 'vue'
 import type { Field } from '@/stores/boardStore'
 import { useItemStore } from '@/stores/itemStore'
+import { supabase } from '@/supabase'
+import type { CompletedItem, Item } from '@/stores/itemStore'
+import { onMounted } from 'vue'
 
 // IF THE ITEMS ARE NOT LOADING MAKE SURE TO LOAD THE ITEM STORE AND THE BOARD STORE IN THE DAHSBOARD
 
 const props = defineProps<{
   board: Field[]
 }>()
+
+// fetching item data
+onMounted(async () => {
+  const { data, error } = await supabase.from('completed_items').select('*')
+  if (error) console.error('Supabase error:', error)
+  else if (data) {
+    itemStore.allCompletedItems = data as CompletedItem[]
+  }
+})
+onMounted(async () => {
+  const { data, error } = await supabase.from('component_list').select('*')
+  if (error) console.error('Supabase error:', error)
+  else if (data) {
+    itemStore.allComponents = data as Item[]
+  }
+})
 
 // compute 4 rows of 7 cells each from the passed-in board
 const rows = computed<Field[][]>(() =>
@@ -18,7 +37,7 @@ const itemStore = useItemStore()
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 items-center pt-5">
+  <div class="flex flex-col gap-2 items-center pt-5" v-if="itemStore.allCompletedItems.length > 0">
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"

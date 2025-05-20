@@ -18,6 +18,8 @@ export interface CheatSheetWithItems {
 export const useCompositionStore = defineStore('compositionStore', () => {
   // 🔹 State
 
+  const allSavedSheets = ref<CheatSheetWithItems[]>([])
+
   const compData = ref<CompData>({
     name: '',
     levelStrategy: '',
@@ -42,10 +44,65 @@ export const useCompositionStore = defineStore('compositionStore', () => {
     console.log('Composition data updated:', compData.value)
   }
 
+  const savedFullSheet = ref<CheatSheetWithItems>({
+    compData: {
+      name: '',
+      levelStrategy: '',
+    },
+    board: [],
+    completedItems: [],
+    priorityItems: [],
+  })
+
+  function setFullSheet(data: CheatSheetWithItems) {
+    savedFullSheet.value.compData = data.compData
+    savedFullSheet.value.board = data.board
+    savedFullSheet.value.completedItems = data.completedItems
+    savedFullSheet.value.priorityItems = data.priorityItems
+    itemStore.boardItems = data.completedItems
+    itemStore.priorityItems = data.priorityItems
+  }
+
+  //handling local storage
+
+  function saveToLocalStorage() {
+    const existing = JSON.parse(localStorage.getItem('savedSheets') || '[]')
+    existing.push(savedFullSheet.value)
+
+    localStorage.setItem('savedSheets', JSON.stringify(existing))
+
+    allSavedSheets.value = existing
+
+    console.log('Saved to local storage:', allSavedSheets)
+  }
+
+  function loadFromLocalStorage() {
+    try {
+      const existing = JSON.parse(localStorage.getItem('savedSheets') || '[]')
+      allSavedSheets.value = existing
+      console.log('Loaded from local storage:', allSavedSheets)
+    } catch (e) {
+      console.error('Failed to load from localStorage:', e)
+      allSavedSheets.value = []
+    }
+  }
+
+  function saveAndAddToLocalStorage(savedSheet: CheatSheetWithItems) {
+    setFullSheet(savedSheet)
+    saveToLocalStorage()
+
+  }
+
   return {
     cheatSheet,
     compData,
     cheatSheetWithItems,
+    savedFullSheet,
+    allSavedSheets,
+    saveAndAddToLocalStorage,
+    loadFromLocalStorage,
+    saveToLocalStorage,
+    setFullSheet,
     setCompData
   }
 })

@@ -40,6 +40,10 @@ const compData = ref<CompData>({
 
 const compositionStore = useCompositionStore()
 
+function saveCurrentBuild() {
+  compositionStore.saveAndAddToLocalStorage(compositionStore.cheatSheetWithItems)
+}
+
 // Validation logic for leveling strategy
 const isValid = computed(() => {
   if (compData.value.levelStrategy === '') {
@@ -365,7 +369,32 @@ function changeTab(index: number) {
             <br />When you're ready, click the button below to save your build.
           </p>
           <ReviewData />
-          <button class="btn btn-secondary">Save Build</button>
+          <button class="btn btn-secondary mt-4" @click="saveCurrentBuild()">Save Build</button>
+          <button
+            class="btn btn-secondary mt-4"
+            @click="
+              () => {
+                compositionStore.setFullSheet(compositionStore.cheatSheetWithItems)
+              }
+            "
+          >
+            Load Build
+          </button>
+          <button
+            class="btn btn-secondary mt-4"
+            @click="
+              () => {
+                console.log(compositionStore.savedFullSheet)
+              }
+            "
+          >
+            Load Build
+          </button>
+
+          <div
+            v-for="champion in compositionStore.savedFullSheet.board"
+            :key="champion.champion?.id"
+          ></div>
         </div>
       </div>
     </div>
