@@ -49,3 +49,9 @@ a,
 .tab-content-custom {
   @apply border-base-300 bg-base-200 rounded-md mt-1;
 }
+
+*,
+*::before,
+*::after {
+  transition: all 200ms ease-in-out;
+}

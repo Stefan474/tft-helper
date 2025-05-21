@@ -18,8 +18,13 @@ const togglePicker = () => (showPicker.value = !showPicker.value)
 
 onMounted(() => {
   compositionStore.loadFromLocalStorage()
-  compositionStore.setFullSheet(compositionStore.allSavedSheets[0])
+
+  const first = compositionStore.allSavedSheets[0]
+  if (!first) return
+
+  compositionStore.setFullSheet(first)
   activeSheet.value = compositionStore.savedFullSheet
+
   if (activeSheet.value) {
     itemStore.setSheetItems(activeSheet.value.completedItems, activeSheet.value.priorityItems)
     console.log('activeSheet', activeSheet)
