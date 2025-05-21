@@ -14,7 +14,7 @@ const goToCreate = () => {
 <template>
   <div>
     <div class="flex h-screen items-center justify-center sm:p-4 md:p-8 xl:p-32">
-      <div class="grid xl:grid-cols-2 grid-cols-1 items-center gap-10 md:px-10 w-full">
+      <div class="grid xl:grid-cols-2 grid-cols-1 items-center gap-10 px-4 md:px-10 w-full">
         <div>
           <h1 class="mb-1 text-5xl font-semibold">
             <span class="font-bold text-accent">shhh,</span> Cheating in TFT is okay...

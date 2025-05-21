@@ -18,7 +18,7 @@ const isActive = (p: string) => route.path === p
 <template>
   <!-- MAIN BAR -->
   <nav
-    class="navbar sticky top-0 z-50 w-full bg-base-100/80 backdrop-blur-lg shadow-lg transition-all duration-300 px-12 sm:px-6 xl:px-48"
+    class="navbar sticky top-0 z-50 w-full bg-base-100/80 backdrop-blur-lg shadow-lg transition-all duration-300 px-2 sm:px-6 xl:px-48"
   >
     <!-- Brand + mobile burger -->
     <div class="navbar-start">
