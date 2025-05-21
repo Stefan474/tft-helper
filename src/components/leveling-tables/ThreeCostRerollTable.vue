@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       Similar in a way to standard but with a strong focus on cashing out at levels 6 and 7. Good
       for 3 cost carry comps and can pivot back into standard or fast 8/9 if you are heavily

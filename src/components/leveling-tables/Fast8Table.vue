@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       Good for 4* comps since you will spend most of your gold at level 8 (leveling table). Can
       pivot from
@@ -81,7 +81,7 @@ defineProps({
             >, <span class="text-error">4-2</span>
           </p>
         </div>
-        <div class="uppercase font-semibold text-lg">30g+ after leveing up, DO NOT ROLL</div>
+        <div class="uppercase font-semibold text-lg">30g+ after leveling up, DO NOT ROLL</div>
         <p class="list-col-wrap mt-0.5 opacity-70" :class="{ hidden: showDescription }">
           Only roll if you are going to lose or you depserately need a trait breakpoint like Anmima
           5 to keep up tempo or survive.

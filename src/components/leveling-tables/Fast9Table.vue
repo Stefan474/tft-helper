@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       Similar to fast 8 and great for comps focusing on 5 cost units. Recommended to have at least
       one econ augment or even two if the portal doesn't help leveling up faster. If set mechanics

@@ -2,11 +2,11 @@
 import { useCompositionStore } from '@/stores/compositionStore'
 
 import BoardGenerator from '../utils/BoardGenerator.vue'
-import Fast8Table from '../leveling-tables/Fast8Table.vue'
 import ItemSuggestionGenerator from '../utils/ItemSuggestionGenerator.vue'
 import { onMounted, ref } from 'vue'
 import { useItemStore } from '@/stores/itemStore'
 import type { CheatSheetWithItems } from '@/stores/compositionStore'
+import LevelingTablePicker from '../utils/LevelingTablePicker.vue'
 
 const compositionStore = useCompositionStore()
 const itemStore = useItemStore()
@@ -22,9 +22,9 @@ onMounted(() => {
   }
 })
 
+//changes the dashboard info to display
 function setCurrentSheet(sheet: CheatSheetWithItems) {
   compositionStore.setFullSheet(sheet)
-  console.log('hello', sheet)
   activeSheet.value = sheet
 }
 </script>
@@ -33,17 +33,31 @@ function setCurrentSheet(sheet: CheatSheetWithItems) {
   <div class="p-4 w-full bg-base-100 px-32">
     <div class="grid grid-cols-12 gap-4 w-full">
       <div class="col-span-1"></div>
-      <div class="col-span-6 bg-base-100 p-4 pt-2 flex justify-center h-fit">
-        <div class="inline-block transform origin-top">
-          <div v-if="activeSheet">
-            <BoardGenerator :board="activeSheet.board" />
-          </div>
+      <div class="col-span-5 flex justify-center h-fit justify-self-end">
+        <div class="bg-base-300 p-4">
+          <h3 class="text-2xl font-semibold mb-2">{{ activeSheet?.compData.name }}</h3>
 
-          <ItemSuggestionGenerator />
+          <div class="inline-block transform origin-top bg-base-200 p-4">
+            <div v-if="activeSheet">
+              <BoardGenerator :board="activeSheet.board" />
+            </div>
+
+            <ItemSuggestionGenerator />
+          </div>
+          <div class="w-full flex mt-4">
+            <button class="btn btn-secondary">Download as image</button>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 gap-4 col-span-4">
+      <div class="grid grid-cols-1 gap-4 col-span-3">
+        <div v-if="activeSheet" class="bg-base-300 p-4">
+          <h3 class="text-2xl mb-2 font-semibold">Board</h3>
+          <LevelingTablePicker
+            :table="activeSheet.compData.levelStrategy"
+            :hide-description="true"
+          />
+        </div>
         <div class="bg-base-100">
           <div class="text-x p-2 ml-4 mt-4 overflow-y-scroll">
             <h3 class="text-xl mb-2">Pick a comp</h3>
@@ -56,12 +70,9 @@ function setCurrentSheet(sheet: CheatSheetWithItems) {
               >
                 {{ sheet.compData.name }}
               </div>
-              <button class="btn btn-primary mt-4">Save</button>
+              <button class="btn btn-primary mt-4">Download Image</button>
             </div>
           </div>
-        </div>
-        <div class="bg-green-200">
-          <Fast8Table :show-description="false" />
         </div>
       </div>
     </div>

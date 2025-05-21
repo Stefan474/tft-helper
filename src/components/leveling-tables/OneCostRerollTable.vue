@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       The idea of this pattern is usually to lose stream early for economy (specially if you get a
       lose-streak augment) and to spend as much time as you can on lower levels until you hit your

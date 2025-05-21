@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       The idea of this pattern is to lose streak early to get some economy, although you can also
       level up on <span class="text-accent"><b>2-1</b></span> and play a strong board. Look to hit

@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <ul class="list bg-base-100 rounded shadow-md">
+  <ul class="list bg-base-200 rounded shadow-md">
     <li class="p-2 pb-2 opacity-90 tracking-wide" :class="{ hidden: showDescription }">
       Good in most situations. Go for this if you don't know what to play. Can pivot into
       <b class="text-accent opacity-100">2 and 3 cost reroll</b> and
