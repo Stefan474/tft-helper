@@ -61,11 +61,12 @@ const goToCreate = () => {
             </button>
           </div>
         </div>
-        <div>
+        <!-- IMAGE WRAPPER -->
+        <div class="relative xl:static w-full flex justify-center">
           <img
             src="@/assets/promotional-hero-tft.png"
             alt=""
-            class="xl:size-130 xl:w-max-140 2xl:size-140 size-100 rounded-full 3xl:size-200"
+            class="size-80 2xl:size-140 3xl:size-200 rounded-full opacity-20 xl:opacity-100 absolute bottom-0 left-1/2 -translate-x-1/5 xl:static xl:translate-x-0 lg:rounded-full"
           />
         </div>
       </div>
