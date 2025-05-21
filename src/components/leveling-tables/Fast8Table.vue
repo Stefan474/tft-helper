@@ -153,19 +153,16 @@ defineProps({
 </template>
 
 <style scoped>
-.font-semibold {
-  font-weight: 400;
-}
-
 .text-accent {
   color: #008a0e;
-  font-weight: 500;
 }
 .text-error {
-  color: #e05858;
+  color: #c01111;
+  font-weight: 400;
 }
 .text-warning {
-  color: #ffb94f;
+  color: #ff6a00;
+  font-weight: 400;
 }
 .opacity-70 {
   opacity: 90%;
@@ -173,5 +170,12 @@ defineProps({
 .list-col-wrap,
 .opacity-90 {
   font-size: medium;
+}
+
+b {
+  font-weight: 700;
+}
+.font-semibold {
+  font-weight: 400;
 }
 </style>

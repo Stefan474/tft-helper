@@ -85,7 +85,6 @@ const makeNewComp = () => {
           <LevelingTablePicker
             :table="activeSheet.compData.levelStrategy"
             :hide-description="!guideMode"
-            class="font-thin"
           />
         </div>
       </div>
@@ -134,5 +133,3 @@ const makeNewComp = () => {
     </div>
   </div>
 </template>
-
-<style scoped></style>
