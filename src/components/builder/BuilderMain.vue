@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, provide } from 'vue'
+import { ref, computed, provide, onMounted } from 'vue'
 import BoardSim from '@/components/builder/BoardSim.vue'
 import ChampionItems from '@/components/builder/ChampionItems.vue'
 import ItemPriority from '@/components/builder/ItemPriority.vue'
@@ -7,6 +7,7 @@ import { useBoardStore } from '@/stores/boardStore'
 import { useCompositionStore } from '@/stores/compositionStore'
 import ReviewData from './ReviewData.vue'
 import router from '@/router'
+import { useItemStore } from '@/stores/itemStore'
 
 export interface CompData {
   name: string
@@ -40,8 +41,20 @@ const compData = ref<CompData>({
 })
 
 const compositionStore = useCompositionStore()
+const itemStore = useItemStore()
+
+//clear item store on mount
+onMounted(() => {
+  itemStore.boardItems = []
+  itemStore.priorityItems = []
+})
 
 function saveCurrentBuild() {
+  if (itemStore.boardItems.length === 0) {
+    alert('You need to build at least one item for the cheat sheet to be saved.')
+    tabTracker.value = 3
+    return
+  }
   compositionStore.saveAndAddToLocalStorage(compositionStore.cheatSheetWithItems)
   router.push('/dashboard')
 }
@@ -320,7 +333,7 @@ function changeTab(index: number) {
             <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
-        <div class="mt-5 text-center"><ChampionItems /></div>
+        <div class="mt-5 text-center"><ChampionItems @change-tab="changeTab" /></div>
       </div>
 
       <!-- Tab 4 -->
@@ -342,7 +355,7 @@ function changeTab(index: number) {
             <li class="step" @click="changeTab(5)">Confirm</li>
           </ul>
         </div>
-        <div class="mt-5 text-center"><ItemPriority /></div>
+        <div class="mt-5 text-center"><ItemPriority @change-tab="changeTab" /></div>
       </div>
 
       <!-- Tab 5 -->

@@ -1,7 +1,10 @@
 @import 'tailwindcss';
 @tailwind utilities;
 @plugin "daisyui" {
-  themes: dark --default;
+  themes:
+    sunset --default,
+    lofi,
+    pastel;
 }
 
 #app {

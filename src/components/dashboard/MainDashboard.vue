@@ -7,12 +7,14 @@ import { onMounted, ref } from 'vue'
 import { useItemStore } from '@/stores/itemStore'
 import type { CheatSheetWithItems } from '@/stores/compositionStore'
 import LevelingTablePicker from '../utils/LevelingTablePicker.vue'
+import router from '@/router'
 
 const compositionStore = useCompositionStore()
 const itemStore = useItemStore()
 const activeSheet = ref<CheatSheetWithItems>()
 const showPicker = ref(false)
 const guideMode = ref(false)
+const togglePicker = () => (showPicker.value = !showPicker.value)
 
 onMounted(() => {
   compositionStore.loadFromLocalStorage()
@@ -34,11 +36,13 @@ function deleteSheet(sheet: CheatSheetWithItems) {
   compositionStore.deleteSheet(sheet)
 }
 
-const togglePicker = () => (showPicker.value = !showPicker.value)
+const makeNewComp = () => {
+  router.push('/create')
+}
 </script>
 
 <template>
-  <div class="w-full bg-base-100 px-4 sm:px-8 lg:px-32 py-4">
+  <div class="w-full bg-base-100 px-4 sm:px-8 lg:px-32 py-4" v-if="activeSheet">
     <!-- responsive grid -->
     <div
       class="grid gap-4 sm:gap-6 lg:gap-8"
@@ -48,28 +52,26 @@ const togglePicker = () => (showPicker.value = !showPicker.value)
       }"
     >
       <!-- ─── Board / items card ─────────────────────────────── -->
-      <div class="flex justify-center col-span-12 xl:col-span-7 2xl:col-span-6">
+      <div class="flex justify-center col-span-12 xl:col-span-7 2xl:col-span-6 2xl:col-start-2">
         <div
-          class="bg-base-300 p-4 sm:p-6 2xl:p-8 flex flex-col w-full"
+          class="bg-base-300 p-4 sm:p-6 2xl:p-8 flex flex-col w-full rounded-xl"
           :class="{ 'h-fit': guideMode }"
         >
-          <h3 class="text-2xl font-semibold mb-4 capitalize truncate">
-            {{ activeSheet?.compData.name }}
-          </h3>
-
+          <div class="flex align-middle justify-center">
+            <h3 class="text-2xl font-semibold mb-4 capitalize truncate flex-grow">
+              {{ activeSheet?.compData.name }}
+            </h3>
+            <button class="btn btn-primary" @click="togglePicker">Pick a different comp</button>
+          </div>
           <div class="flex flex-col bg-base-200 p-4 sm:p-6 flex-grow justify-center gap-4">
             <BoardGenerator v-if="activeSheet" :board="activeSheet.board" />
             <ItemSuggestionGenerator />
           </div>
-
-          <button class="btn btn-secondary mt-6 self-end" @click="togglePicker">
-            Pick a different comp
-          </button>
         </div>
       </div>
 
       <!-- ─── Leveling table ──────────────────────────────────── -->
-      <div v-if="activeSheet" class="col-span-12 sm:col-span-4 lg:col-span-12 xl:col-span-5">
+      <div v-if="activeSheet" class="col-span-12 sm:col-span-12 lg:col-span-12 xl:col-span-4">
         <div class="bg-base-300 p-4 sm:p-6 lg:p-8 h-full rounded-xl">
           <div class="flex">
             <h3 class="text-2xl mb-1 font-semibold flex-grow">Leveling Strategy</h3>
@@ -109,7 +111,7 @@ const togglePicker = () => (showPicker.value = !showPicker.value)
           :key="sheet.compData.name"
           class="bg-base-200 p-3 rounded hover:bg-base-100 cursor-pointer transition flex"
         >
-          <div class="flex-grow" @click="(setCurrentSheet(sheet), (showPicker = false))">
+          <div class="flex-grow h-full" @click="(setCurrentSheet(sheet), (showPicker = false))">
             {{ sheet.compData.name }}
           </div>
           <div
@@ -120,8 +122,15 @@ const togglePicker = () => (showPicker.value = !showPicker.value)
           </div>
         </div>
 
-        <button class="btn btn-secondary w-full mt-4">Make a new comp</button>
+        <button class="btn btn-secondary w-full mt-4" @click="makeNewComp">Make a new comp</button>
       </div>
+    </div>
+  </div>
+  <div class="flex justify-center items-center w-full h-120" v-if="!activeSheet">
+    <div class="bg-base-300 p-6 sm:p-8 rounded-xl flex flex-col items-center gap-4">
+      <h3 class="text-2xl font-semibold">No comp selected</h3>
+      <p class="text-md text-center">You need to create a comp first.</p>
+      <button class="btn btn-secondary" @click="makeNewComp">Make a new comp</button>
     </div>
   </div>
 </template>

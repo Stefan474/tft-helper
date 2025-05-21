@@ -21,7 +21,7 @@ const itemStore = useItemStore()
         :key="item.item.id"
       >
         <div class="flex align-middle justify-center relative">
-          <p class="text-lg bottom-0 left-0 bg-primary/30 rounded-2xl font-bold absolute">
+          <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
             {{ item.count }}x
           </p>
           <img
@@ -32,6 +32,7 @@ const itemStore = useItemStore()
           <span class="font-bold my-auto" v-if="idx < itemStore.priorityComponentCounts.length - 1">
             →
           </span>
+          <span v-else> &nbsp; &nbsp;</span>
         </div>
       </li>
     </ul>
@@ -48,7 +49,7 @@ const itemStore = useItemStore()
           :key="item.item.id"
         >
           <div class="flex align-middle justify-center relative">
-            <p class="text-lg bottom-0 left-0 bg-primary/30 rounded-2xl font-bold absolute">
+            <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
               {{ item.count }}x
             </p>
             <img
@@ -62,6 +63,7 @@ const itemStore = useItemStore()
             >
               →
             </span>
+            <span v-else> &nbsp; &nbsp;</span>
           </div>
         </li>
       </ul>
@@ -75,7 +77,7 @@ const itemStore = useItemStore()
           :key="item.item.id"
         >
           <div class="flex align-middle justify-center relative">
-            <p class="text-lg bottom-0 left-0 bg-primary/30 rounded-2xl font-bold absolute">
+            <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
               {{ item.count }}x
             </p>
             <img
@@ -86,6 +88,7 @@ const itemStore = useItemStore()
             <span class="font-bold my-auto" v-if="idx < itemStore.componentCounts.length - 1">
               →
             </span>
+            <span v-else> &nbsp; &nbsp;</span>
           </div>
         </li>
       </ul>

@@ -236,7 +236,7 @@ function nextStep() {
       <div
         v-for="field in row"
         :key="field.x"
-        class="hex w-16 bg-base-200 flex items-center justify-center text-sm font-bold border border-base-300"
+        class="hex w-16 bg-base-300 flex items-center justify-center text-sm font-bold border border-base-300"
         :draggable="!!field.champion"
         @dragover="onDragOverHex($event)"
         @drop="onDrop(field.x, $event)"

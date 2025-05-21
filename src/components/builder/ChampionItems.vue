@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, inject, watch, computed } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import { supabase } from '@/supabase'
 import type { Field } from '@/stores/boardStore'
@@ -20,8 +20,6 @@ const loading = ref(true) // track loading state
 const itemData = ref<CompletedItem[]>([])
 const boardData = ref<Field[]>([])
 const itemFilter = ref('')
-
-const tabTracker = inject('tabTracker', ref(3))
 
 const itemStore = useItemStore()
 
@@ -112,6 +110,11 @@ function removeChampionItem(field: Field, index: number) {
 
   itemStore.removeBoardItem(id)
   field.champion!.itemIds[index] = 999
+}
+
+const emitTabTracker = defineEmits(['change-tab'])
+function nextStep() {
+  emitTabTracker('change-tab', 4)
 }
 </script>
 
@@ -219,5 +222,5 @@ function removeChampionItem(field: Field, index: number) {
     </div>
   </div>
 
-  <button class="btn btn-primary" @click="() => (tabTracker = 4)">Next</button>
+  <button class="btn btn-primary mt-4" @click="nextStep()">Next</button>
 </template>
