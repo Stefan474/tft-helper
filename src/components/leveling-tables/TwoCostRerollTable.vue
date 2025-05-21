@@ -147,3 +147,22 @@ defineProps({
     </li>
   </ul>
 </template>
+<style scoped>
+.font-semibold {
+  font-weight: 400;
+}
+
+.text-accent {
+  color: #008a0e;
+  font-weight: 500;
+}
+.text-error {
+  color: #e05858;
+}
+.text-warning {
+  color: #ffb94f;
+}
+.opacity-70 {
+  opacity: 90%;
+}
+</style>
