@@ -90,8 +90,19 @@ export const useCompositionStore = defineStore('compositionStore', () => {
   function saveAndAddToLocalStorage(savedSheet: CheatSheetWithItems) {
     setFullSheet(savedSheet)
     saveToLocalStorage()
-
   }
+
+  function deleteSheet(sheetToRemove: CheatSheetWithItems) {
+    allSavedSheets.value = allSavedSheets.value.filter(
+      sheet => sheet !== sheetToRemove
+    )
+
+    localStorage.setItem(
+      'savedSheets',
+      JSON.stringify(allSavedSheets.value)
+    )
+  }
+
 
   return {
     cheatSheet,
@@ -99,6 +110,7 @@ export const useCompositionStore = defineStore('compositionStore', () => {
     cheatSheetWithItems,
     savedFullSheet,
     allSavedSheets,
+    deleteSheet,
     saveAndAddToLocalStorage,
     loadFromLocalStorage,
     saveToLocalStorage,
