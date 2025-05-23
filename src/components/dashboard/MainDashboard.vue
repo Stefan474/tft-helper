@@ -93,7 +93,7 @@ const makeNewComp = () => {
             <BoardGenerator
               v-if="activeSheet"
               :board="activeSheet.board"
-              class="scale-80 md:scale-110 lg:scale-115 xl:scale-100"
+              class="scale-60 md:scale-110 lg:scale-115 xl:scale-100"
             />
             <ItemSuggestionGenerator />
           </div>
