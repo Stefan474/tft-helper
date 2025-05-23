@@ -12,6 +12,7 @@ interface Champion {
   trait3: string
   asset_path: string
   stars?: boolean
+  cost: number
   itemIds: [999, 999, 999]
 }
 export interface Field {
@@ -57,10 +58,20 @@ const rows = computed(() =>
 
 const filteredChampions = computed(() => {
   const filter = champFilter.value.toLowerCase().trim()
-  if (!filter) return championList.value
-  return championList.value.filter((c) =>
-    [c.name, c.trait1, c.trait2, c.trait3].some((f) => f?.toLowerCase().includes(filter)),
-  )
+
+  const filtered = !filter
+    ? championList.value
+    : championList.value.filter((c) =>
+        [c.name, c.trait1, c.trait2, c.trait3].some((f) => f?.toLowerCase().includes(filter)),
+      )
+
+  // sort by trait1, then by cost
+  return [...filtered].sort((a, b) => {
+    const traitCompare = a.trait1.localeCompare(b.trait1)
+    if (traitCompare !== 0) return traitCompare
+
+    return a.cost - b.cost
+  })
 })
 
 function addStars(champion?: Champion | null) {
@@ -69,6 +80,7 @@ function addStars(champion?: Champion | null) {
     if (field) {
       field.champion!.stars = !field.champion!.stars
       console.log(field.champion?.name, 'stars:', field.champion?.stars)
+      console.log(field.champion?.cost, 'cost')
     }
   }
 }
@@ -263,7 +275,7 @@ function nextStep() {
           v-if="field.champion"
           :src="'/assets/tft-champion/' + field.champion.asset_path + '.png'"
           :alt="field.champion.name + ' champion icon'"
-          class="object-cover object-right h-full w-full scale-97 origin-center hex"
+          class="object-cover object-right h-full w-full scale-98 origin-center hex"
           :class="{ 'brightness-85': field.champion.stars }"
         />
         <img
@@ -271,7 +283,17 @@ function nextStep() {
           src="/assets/ux_images/3-star-asset_2.png"
           class="absolute top-0 w-8"
         />
-        <div v-if="field.champion" class="hex w-20 h-20 bg-pink-500 absolute top-0 -z-10"></div>
+        <div
+          v-if="field.champion"
+          class="hex w-20 h-20 absolute top-0 -z-10"
+          :class="{
+            'bg-gray-500': field.champion.cost === 1,
+            'bg-green-600': field.champion.cost === 2,
+            'bg-blue-500': field.champion.cost === 3,
+            'bg-purple-500': field.champion.cost === 4,
+            'bg-orange-400': field.champion.cost === 5,
+          }"
+        ></div>
       </div>
     </div>
   </div>
@@ -292,11 +314,18 @@ function nextStep() {
         v-model="champFilter"
       />
     </label>
-    <div class="flex w-full max-w-4xl gap-1 flex-wrap justify-start mt-5">
+    <div class="flex w-full max-w-4xl gap-1.5 flex-wrap justify-start mt-5">
       <ul v-for="champion in filteredChampions" :key="champion.id" class="flex gap-2 max-w-4xl">
         <li>
           <div
-            class="w-15 rounded-xl border-2 border-base-200 h-15"
+            class="w-15 rounded-xl h-15 relative border-1"
+            :class="{
+              'border-gray-500': champion.cost === 1,
+              'border-green-600': champion.cost === 2,
+              'border-blue-500': champion.cost === 3,
+              'border-purple-500': champion.cost === 4,
+              'border-orange-400': champion.cost === 5,
+            }"
             draggable="true"
             @dragstart="onDragStart(champion, $event)"
             @dragend="onDragEnd()"
@@ -307,7 +336,7 @@ function nextStep() {
               v-if="champion.asset_path"
               :src="'/assets/tft-champion/' + champion.asset_path + '.png'"
               :alt="champion.name + ' champion icon'"
-              class="object-right object-cover h-full rounded-xl"
+              class="object-right object-cover h-full rounded-xl origin-center"
             />
           </div>
         </li>
