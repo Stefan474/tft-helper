@@ -79,14 +79,16 @@ const makeNewComp = () => {
           :class="{ 'h-fit': guideMode }"
         >
           <div class="flex align-middle justify-center">
-            <h3 class="text-2xl font-semibold mb-4 capitalize truncate flex-grow">
+            <h3 class="text-lg lg:text-2xl font-semibold mb-4 capitalize truncate flex-grow">
               {{ activeSheet?.compData.name }}
             </h3>
-            <div class="flex gap-2 scale-70 origin-right md:scale-100">
-              <button class="btn btn-secondary" @click="showExport = true">
+            <div class="flex gap-2 flex-col md:flex-row mb-2 md:mb-0">
+              <button class="btn btn-secondary btn-sm" @click="showExport = true">
                 Export your sheets
               </button>
-              <button class="btn btn-primary" @click="togglePicker">Pick a different comp</button>
+              <button class="btn btn-primary btn-sm" @click="togglePicker">
+                Pick a different comp
+              </button>
             </div>
           </div>
           <div class="flex flex-col bg-base-200 p-4 sm:p-6 flex-grow justify-center gap-4">

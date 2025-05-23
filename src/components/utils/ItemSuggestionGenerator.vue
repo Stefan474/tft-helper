@@ -21,7 +21,7 @@ const itemStore = useItemStore()
         :key="item.item.id"
       >
         <div class="flex align-middle justify-center relative">
-          <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
+          <p class="text-md -top-1 left-0 bg-base-200/90 rounded-2xl font-bold absolute">
             {{ item.count }}x
           </p>
           <img
@@ -49,7 +49,7 @@ const itemStore = useItemStore()
           :key="item.item.id"
         >
           <div class="flex align-middle justify-center relative">
-            <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
+            <p class="text-md -top-1 left-0 bg-base-200/90 rounded-2xl font-bold absolute">
               {{ item.count }}x
             </p>
             <img
@@ -77,7 +77,7 @@ const itemStore = useItemStore()
           :key="item.item.id"
         >
           <div class="flex align-middle justify-center relative">
-            <p class="text-lg top-5 right-11 bg-primary/30 rounded-2xl font-bold absolute">
+            <p class="text-md -top-1 left-0 bg-base-200/90 rounded-2xl font-bold absolute">
               {{ item.count }}x
             </p>
             <img
