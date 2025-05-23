@@ -82,7 +82,7 @@ const makeNewComp = () => {
             <h3 class="text-2xl font-semibold mb-4 capitalize truncate flex-grow">
               {{ activeSheet?.compData.name }}
             </h3>
-            <div class="flex gap-2">
+            <div class="flex gap-2 scale-70 origin-right md:scale-100">
               <button class="btn btn-secondary" @click="showExport = true">
                 Export your sheets
               </button>
