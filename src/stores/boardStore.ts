@@ -9,6 +9,7 @@ export interface Champion {
   trait2: string
   trait3: string
   asset_path: string
+  stars?: boolean,
   itemIds: [number?, number?, number?]
 }
 

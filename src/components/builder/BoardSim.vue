@@ -11,6 +11,7 @@ interface Champion {
   trait2: string
   trait3: string
   asset_path: string
+  stars?: boolean
   itemIds: [999, 999, 999]
 }
 export interface Field {
@@ -61,6 +62,16 @@ const filteredChampions = computed(() => {
     [c.name, c.trait1, c.trait2, c.trait3].some((f) => f?.toLowerCase().includes(filter)),
   )
 })
+
+function addStars(champion?: Champion | null) {
+  if (champion) {
+    const field = board.value.find((f) => f.champion?.id === champion.id)
+    if (field) {
+      field.champion!.stars = !field.champion!.stars
+      console.log(field.champion?.name, 'stars:', field.champion?.stars)
+    }
+  }
+}
 
 // ——— SVG-based drag preview helper ———
 const DRAG_IMG_SIZE = 64
@@ -236,7 +247,7 @@ function nextStep() {
       <div
         v-for="field in row"
         :key="field.x"
-        class="hex w-16 bg-base-300 flex items-center justify-center text-sm font-bold border border-base-300"
+        class="hex w-16 bg-base-300 flex items-center justify-center text-sm font-bold border border-base-300 relative"
         :draggable="!!field.champion"
         @dragover="onDragOverHex($event)"
         @drop="onDrop(field.x, $event)"
@@ -246,13 +257,21 @@ function nextStep() {
         @mouseleave="onDragEnd()"
         @mouseover="addDragging(field.champion)"
         @dblclick="removeChampion(field.champion)"
+        @click="addStars(field.champion)"
       >
         <img
           v-if="field.champion"
           :src="'/assets/tft-champion/' + field.champion.asset_path + '.png'"
           :alt="field.champion.name + ' champion icon'"
-          class="object-cover object-right h-full w-full"
+          class="object-cover object-right h-full w-full scale-97 origin-center hex"
+          :class="{ 'brightness-85': field.champion.stars }"
         />
+        <img
+          v-if="field.champion && field.champion.stars"
+          src="/assets/ux_images/3-star-asset_2.png"
+          class="absolute top-0 w-8"
+        />
+        <div v-if="field.champion" class="hex w-20 h-20 bg-pink-500 absolute top-0 -z-10"></div>
       </div>
     </div>
   </div>

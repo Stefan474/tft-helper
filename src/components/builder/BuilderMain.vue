@@ -309,7 +309,7 @@ function changeTab(index: number) {
           <div class="mt-5 text-right"></div>
 
           Drag the champions onto the board and build your end-board. <br />
-          Double click to remove a champion from the board.
+          <span class="text-warning font-semibold">Click to 3-star, double click to remove.</span>
           <BoardSim @change-tab="changeTab" />
         </div>
       </div>

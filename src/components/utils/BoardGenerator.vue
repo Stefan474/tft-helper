@@ -56,6 +56,12 @@ const itemStore = useItemStore()
             :src="`/assets/tft-champion/${field.champion.asset_path}.png`"
             :alt="`${field.champion.name} icon`"
             class="object-cover object-right h-full w-full"
+            :class="{ 'brightness-85': field.champion.stars }"
+          />
+          <img
+            v-if="field.champion && field.champion.stars"
+            src="/assets/ux_images/3-star-asset_2.png"
+            class="absolute top-0 w-8"
           />
         </div>
 
