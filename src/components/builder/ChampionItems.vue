@@ -130,10 +130,28 @@ function nextStep() {
     <ul class="lg:w-1/2 flex flex-wrap justify-start h-fit gap-12">
       <li v-for="field in boardData.filter((f) => f.champion)" :key="field.x">
         <div class="relative">
+          <div
+            v-if="field.champion"
+            class="hex w-full h-full absolute top-0"
+            :class="{
+              'bg-gray-500': field.champion.cost === 1,
+              'bg-green-600': field.champion.cost === 2,
+              'bg-blue-500': field.champion.cost === 3,
+              'bg-purple-500': field.champion.cost === 4,
+              'bg-orange-400': field.champion.cost === 5,
+            }"
+          ></div>
+
           <img
             :src="'/assets/tft-champion/' + field.champion!.asset_path + '.png'"
             alt="Champion Image"
-            class="hex w-24 h-24 object-cover object-right"
+            class="hex w-24 h-24 object-cover object-right scale-95 origin-center"
+            :class="{ 'brightness-80': field.champion!.stars }"
+          />
+          <img
+            v-if="field.champion && field.champion.stars"
+            src="/assets/ux_images/3-star-asset_2.png"
+            class="absolute -top-2 left-6.5 origin-center w-11"
           />
           <div class="w-24 h-8 absolute bottom-[-10px] left-0 grid grid-cols-3 gap-1">
             <!-- Slot 1 -->

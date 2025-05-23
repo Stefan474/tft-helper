@@ -55,14 +55,25 @@ const itemStore = useItemStore()
             v-if="field.champion"
             :src="`/assets/tft-champion/${field.champion.asset_path}.png`"
             :alt="`${field.champion.name} icon`"
-            class="object-cover object-right h-full w-full"
+            class="hex object-cover object-right h-full w-full scale-97"
             :class="{ 'brightness-85': field.champion.stars }"
           />
           <img
             v-if="field.champion && field.champion.stars"
             src="/assets/ux_images/3-star-asset_2.png"
-            class="absolute top-0 w-8"
+            class="absolute -top-0.25 w-8"
           />
+          <div
+            v-if="field.champion"
+            class="hex w-20 h-20 absolute top-0 -z-10"
+            :class="{
+              'bg-gray-500': field.champion.cost === 1,
+              'bg-green-600': field.champion.cost === 2,
+              'bg-blue-500': field.champion.cost === 3,
+              'bg-purple-500': field.champion.cost === 4,
+              'bg-orange-400': field.champion.cost === 5,
+            }"
+          ></div>
         </div>
 
         <!-- positioned outside of the clipped hex -->

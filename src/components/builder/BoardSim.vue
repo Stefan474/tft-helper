@@ -281,7 +281,7 @@ function nextStep() {
         <img
           v-if="field.champion && field.champion.stars"
           src="/assets/ux_images/3-star-asset_2.png"
-          class="absolute top-0 w-8"
+          class="absolute -top-0.25 w-8"
         />
         <div
           v-if="field.champion"
