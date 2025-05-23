@@ -32,7 +32,7 @@ const itemStore = useItemStore()
           <span class="font-bold my-auto" v-if="idx < itemStore.priorityComponentCounts.length - 1">
             →
           </span>
-          <span v-else> &nbsp; &nbsp;</span>
+          <span v-else></span>
         </div>
       </li>
     </ul>
@@ -63,7 +63,7 @@ const itemStore = useItemStore()
             >
               →
             </span>
-            <span v-else> &nbsp; &nbsp;</span>
+            <span v-else></span>
           </div>
         </li>
       </ul>
@@ -88,7 +88,7 @@ const itemStore = useItemStore()
             <span class="font-bold my-auto" v-if="idx < itemStore.componentCounts.length - 1">
               →
             </span>
-            <span v-else> &nbsp; &nbsp;</span>
+            <span v-else> </span>
           </div>
         </li>
       </ul>
