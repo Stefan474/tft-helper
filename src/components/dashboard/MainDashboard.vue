@@ -3,11 +3,12 @@ import { useCompositionStore } from '@/stores/compositionStore'
 
 import BoardGenerator from '../utils/BoardGenerator.vue'
 import ItemSuggestionGenerator from '../utils/ItemSuggestionGenerator.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useItemStore } from '@/stores/itemStore'
 import type { CheatSheetWithItems } from '@/stores/compositionStore'
 import LevelingTablePicker from '../utils/LevelingTablePicker.vue'
 import router from '@/router'
+import ImportExport from '../utils/ImportExport.vue'
 
 const compositionStore = useCompositionStore()
 const itemStore = useItemStore()
@@ -15,6 +16,21 @@ const activeSheet = ref<CheatSheetWithItems>()
 const showPicker = ref(false)
 const guideMode = ref(false)
 const togglePicker = () => (showPicker.value = !showPicker.value)
+const showExport = ref(false)
+const showImport = ref(false)
+
+const importExportFlow = computed(() => {
+  if (showExport.value) {
+    console.log('setting flow to export')
+    return 'export'
+  }
+  if (showImport.value) {
+    console.log('setting flow to import')
+    return 'import'
+  }
+  console.log('no flow')
+  return ''
+})
 
 onMounted(() => {
   compositionStore.loadFromLocalStorage()
@@ -66,7 +82,12 @@ const makeNewComp = () => {
             <h3 class="text-2xl font-semibold mb-4 capitalize truncate flex-grow">
               {{ activeSheet?.compData.name }}
             </h3>
-            <button class="btn btn-primary" @click="togglePicker">Pick a different comp</button>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary" @click="showExport = true">
+                Export your sheets
+              </button>
+              <button class="btn btn-primary" @click="togglePicker">Pick a different comp</button>
+            </div>
           </div>
           <div class="flex flex-col bg-base-200 p-4 sm:p-6 flex-grow justify-center gap-4">
             <BoardGenerator v-if="activeSheet" :board="activeSheet.board" />
@@ -107,6 +128,7 @@ const makeNewComp = () => {
     >
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-xl font-semibold">Pick a comp</h3>
+        <button class="btn btn-secondary" @click="showImport = true">Import sheets</button>
       </div>
 
       <div class="space-y-2">
@@ -135,6 +157,55 @@ const makeNewComp = () => {
       <h3 class="text-2xl font-semibold">No comp selected</h3>
       <p class="text-md text-center">You need to create a comp first.</p>
       <button class="btn btn-secondary" @click="makeNewComp">Make a new comp</button>
+      <ImportExport :type="'import'" />
+      <div v-if="showExport"></div>
+      <ImportExport :type="'export'" />
     </div>
+  </div>
+
+  <div
+    v-if="showExport || showImport"
+    class="z-20"
+    @click.self="((showExport = false), (showImport = false))"
+  >
+    <teleport to="body">
+      <div
+        class="fixed inset-0 left-0 w-full h-full bg-base-300/80 p-4 sm:p-6 lg:p-8 rounded-xl flex justify-center z-50"
+      >
+        <div
+          v-if="showExport || showImport"
+          class="bg-base-300 w-full lg:w-fit rounded-xl p-4 lg:pb-8 pt sm:p-6 lg:p-8 lg:pt-2 h-fit my-auto border-2 border-secondary"
+        >
+          <div class="flex relative">
+            <h3
+              class="text-xl mb-2 text-left font-semibold flex-grow"
+              v-if="importExportFlow === 'export'"
+            >
+              Export
+            </h3>
+            <h3
+              class="text-xl mb-2 text-left font-semibold flex-grow"
+              v-if="importExportFlow === 'import'"
+            >
+              Import
+            </h3>
+            <div
+              class="px-2 h-fit py-0.5 rounded-lg btn-ghost text-white font-semibold cursor-pointer bg-red-500/50"
+              @click="
+                () => {
+                  showExport = false
+                  showImport = false
+                  console.log('closing' + importExportFlow)
+                }
+              "
+            >
+              X
+            </div>
+          </div>
+
+          <div class="p-4 bg-base-100 rounded-lg"><ImportExport :type="importExportFlow" /></div>
+        </div>
+      </div>
+    </teleport>
   </div>
 </template>
