@@ -90,7 +90,11 @@ const makeNewComp = () => {
             </div>
           </div>
           <div class="flex flex-col bg-base-200 p-4 sm:p-6 flex-grow justify-center gap-4">
-            <BoardGenerator v-if="activeSheet" :board="activeSheet.board" />
+            <BoardGenerator
+              v-if="activeSheet"
+              :board="activeSheet.board"
+              class="scale-80 md:scale-110 lg:scale-115 xl:scale-100"
+            />
             <ItemSuggestionGenerator />
           </div>
         </div>

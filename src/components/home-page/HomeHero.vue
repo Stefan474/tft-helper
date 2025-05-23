@@ -24,7 +24,7 @@ const goToCreate = () => {
             Simplify how you think about TFT and focus on playing instead of juggling different
             guide sites.
           </p>
-          <div class="flex justify-start gap-4">
+          <div class="flex justify-start gap-4 z-10">
             <button class="btn btn-secondary" @click="goToCreate">
               Make a cheat sheet
               <svg
@@ -42,7 +42,7 @@ const goToCreate = () => {
                 />
               </svg>
             </button>
-            <button class="btn btn-primary" @click="goToDashboard">
+            <button class="btn btn-primary z-10" @click="goToDashboard">
               Go to dashboard
               <svg
                 xmlns="http://www.w3.org/2000/svg"
