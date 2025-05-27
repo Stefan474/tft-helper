@@ -95,7 +95,7 @@ const makeNewComp = () => {
             <BoardGenerator
               v-if="activeSheet"
               :board="activeSheet.board"
-              class="scale-60 md:scale-110 lg:scale-115 xl:scale-100"
+              class="scale-60 sm:scale-80 md:scale-110 lg:scale-115 xl:scale-100"
             />
             <ItemSuggestionGenerator />
           </div>
@@ -162,10 +162,10 @@ const makeNewComp = () => {
     <div class="bg-base-300 p-6 sm:p-8 rounded-xl flex flex-col items-center gap-4">
       <h3 class="text-2xl font-semibold">No comp selected</h3>
       <p class="text-md text-center">You need to create a comp first.</p>
-      <button class="btn btn-secondary" @click="makeNewComp">Make a new comp</button>
-      <ImportExport :type="'import'" />
-      <div v-if="showExport"></div>
-      <ImportExport :type="'export'" />
+      <div class="flex flex-col gap-4">
+        <button class="btn btn-secondary" @click="makeNewComp">Make a new comp</button>
+        <button class="btn btn-primary" @click="showImport = true">Import sheets</button>
+      </div>
     </div>
   </div>
 
