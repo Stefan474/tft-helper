@@ -10,6 +10,7 @@ const links = [
   { label: 'Items', path: '/items' },
   { label: 'Create a Sheet', path: '/create' },
   { label: 'Dashboard', path: '/dashboard' },
+  { label: 'Guides', path: '/guides' },
 ]
 
 const isActive = (p: string) => route.path === p

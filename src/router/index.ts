@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ItemView from '@/views/ItemView.vue'
 import CreateView from '@/views/CreateView.vue'
 import DashboardView from '@/views/DashboardView.vue'
+import GuideView from '@/views/GuideView.vue'
 
 const routes = [
   {
@@ -24,7 +25,12 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
-  }
+  },
+  {
+    path: '/guides',
+    name: 'guides',
+    component: GuideView,
+  },
   // Add more routes as needed
 ]
 
