@@ -147,7 +147,7 @@ const makeNewComp = () => {
             {{ sheet.compData.name }}
           </div>
           <div
-            class="bg-red-500 rounded-lg px-3"
+            class="bg-primary text-black rounded-lg px-2"
             @click="(deleteSheet(sheet), (showPicker = true))"
           >
             X

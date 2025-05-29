@@ -7,7 +7,7 @@ import { supabase } from '@/supabase'
 import DashboardGenerator from '@/components/utils/DashboardGenerator.vue'
 
 const compositionStore = useCompositionStore()
-const guideKey: string = '0deM9RnBIAeev9x5ndv0urapJm0FFbIQ' //change to the current guide key
+const guideKey: string = 'FAEv7bNjetFGS0EsFlTOZZb3cB4VjixL' //change to the current guide key
 const isImported = ref(false)
 const importError = ref(false)
 const guideSheetList = ref<CheatSheetWithItems[]>([])
@@ -147,9 +147,20 @@ function addSheet(sheet: CheatSheetWithItems) {
                   </div>
                 </div>
 
-                <div class="bg-base-100 rounded-lg p-2 pl-1">
+                <div class="bg-base-100 rounded-lg p-2 pt-0.5 pl-1">
                   <ul class="flex flex-wrap justify-start gap-4 py-1">
-                    <li v-for="field in sheet.board.filter((f) => f.champion)" :key="field.x">
+                    <li
+                      v-for="field in sheet.board
+                        .filter((f) => f.champion)
+                        .slice()
+                        .sort((a, b) => {
+                          // sort by item slots
+                          const ah = a.champion?.itemIds.some((id) => id !== 999)
+                          const bh = b.champion?.itemIds.some((id) => id !== 999)
+                          return ah === bh ? 0 : ah ? -1 : 1
+                        })"
+                      :key="field.x"
+                    >
                       <div class="relative">
                         <div
                           v-if="field.champion"
@@ -174,7 +185,10 @@ function addSheet(sheet: CheatSheetWithItems) {
                           src="/assets/ux_images/3-star-asset_2.png"
                           class="absolute top-0 left-3.5 origin-center w-9 opacity-90"
                         />
-                        <div class="w-16 h-6 absolute bottom-[-10px] left-0 grid grid-cols-3 gap-1">
+                        <div
+                          class="w-16 h-6 absolute bottom-[-10px] left-0 grid grid-cols-3 gap-1"
+                          v-if="field.champion?.itemIds.some((id) => id !== 999)"
+                        >
                           <!-- Slot 1 -->
                           <div class="bg-gray-800 border-primary border-1 w-5.5 h-5.5">
                             <img

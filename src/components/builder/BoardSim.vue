@@ -247,13 +247,13 @@ function nextStep() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 items-center pt-5">
+  <div class="flex flex-col gap-1.1 items-center pt-5">
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"
-      class="flex gap-2"
+      class="flex gap-2 mr-9"
       :class="{
-        'ml-8': rowIndex === 1 || rowIndex === 3,
+        'ml-18': rowIndex === 1 || rowIndex === 3,
       }"
     >
       <div
@@ -272,16 +272,21 @@ function nextStep() {
         @click="addStars(field.champion)"
       >
         <img
+          v-if="field.champion && field.champion.stars"
+          src="/assets/ux_images/3-star-asset_2.png"
+          class="absolute top-0 w-8"
+        />
+        <img
           v-if="field.champion"
           :src="'/assets/tft-champion/' + field.champion.asset_path + '.png'"
           :alt="field.champion.name + ' champion icon'"
-          class="object-cover object-right h-full w-full scale-98 origin-center hex"
+          class="object-cover object-right h-full w-full scale-95 origin-center hex"
           :class="{ 'brightness-85': field.champion.stars }"
         />
         <img
           v-if="field.champion && field.champion.stars"
           src="/assets/ux_images/3-star-asset_2.png"
-          class="absolute -top-0.25 w-8"
+          class="absolute top-0 w-8"
         />
         <div
           v-if="field.champion"
@@ -350,7 +355,14 @@ function nextStep() {
 
 <style scoped>
 .hex {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  clip-path: polygon(
+    50% 0%,
+    /* top point */ 100% 25%,
+    /* upper-right */ 100% 75%,
+    /* lower-right */ 50% 100%,
+    /* bottom point */ 0% 75%,
+    /* lower-left */ 0% 25% /* upper-left */
+  );
   aspect-ratio: 1 / 1;
 }
 
@@ -366,7 +378,14 @@ body.dragging .hex {
   cursor: grabbing !important;
 }
 .hex {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  clip-path: polygon(
+    50% 0%,
+    /* top point */ 100% 25%,
+    /* upper-right */ 100% 75%,
+    /* lower-right */ 50% 100%,
+    /* bottom point */ 0% 75%,
+    /* lower-left */ 0% 25% /* upper-left */
+  );
   aspect-ratio: 1 / 1;
 }
 </style>

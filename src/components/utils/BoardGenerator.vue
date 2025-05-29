@@ -39,12 +39,15 @@ const itemStore = useItemStore()
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 items-center pt-5" v-if="itemStore.allCompletedItems.length > 0">
+  <div
+    class="flex flex-col gap-2 items-center pt-5 mr-9"
+    v-if="itemStore.allCompletedItems.length > 0"
+  >
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"
       class="flex gap-2"
-      :class="{ 'ml-8': rowIndex === 1 || rowIndex === 3 }"
+      :class="{ 'ml-18': rowIndex === 1 || rowIndex === 3 }"
     >
       <div v-for="field in row" :key="field.x" class="relative w-16">
         <!-- clipped hex background + champion -->
@@ -109,8 +112,16 @@ const itemStore = useItemStore()
 
 <style scoped>
 .hex {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  clip-path: polygon(
+    50% 0%,
+    /* top point */ 100% 25%,
+    /* upper-right */ 100% 75%,
+    /* lower-right */ 50% 100%,
+    /* bottom point */ 0% 75%,
+    /* lower-left */ 0% 25% /* upper-left */
+  );
   aspect-ratio: 1 / 1;
+
   overflow: hidden; /* optional, ensures champion image stays inside */
 }
 .ml-8 {
