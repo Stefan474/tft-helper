@@ -54,15 +54,15 @@ function buildItem(item: CompletedItem) {
 </script>
 
 <template>
-  <div class="w-124 flex mt-2">
+  <div class="flex mt-2 w-full justify-center">
     <div v-if="loading" class="flex justify-center py-8 bg-base-100">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
 
-    <div class="bg-base-100">
+    <div class="bg-base-100 pl-2">
       <div class="font-bold">Build Options</div>
-      <ul class="grid grid-cols-10 gap-1 grid-rows-5">
+      <ul class="grid grid-cols-7 lg:grid-cols-10 gap-1 lg:grid-rows-5">
         <li v-for="item in filteredItems" :key="item.id" class="relative" @click="buildItem(item)">
           <div
             class="avatar"

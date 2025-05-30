@@ -54,12 +54,12 @@ onMounted(async () => {
 
 <template>
   <p class="font-semibold text-center">Components</p>
-  <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center bg-base-100">
+  <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center">
     <div v-if="loading" class="flex justify-center py-8 pb-2 bg-base-100">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
     </div>
-    <ul v-else class="flex gap-1 flex-wrap justify-center w-120">
+    <ul v-else class="flex gap-1 flex-wrap justify-center w-60 lg:w-120">
       <li v-for="item in itemCombos" :key="item.id" class="relative">
         <div
           class="avatar"
@@ -98,12 +98,9 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div
-    v-if="showSelectedItems"
-    class="grid grid-cols-1 grid-flow-row gap-4 justify-items-stretch md:grid-cols-2"
-  >
+  <div v-if="showSelectedItems" class="grid grid-cols-1 grid-flow-row gap-4 lg:grid-cols-2">
     <div
-      class="mt-4 gap-2 w-62 flex-col bg-base-200 p-1 min-h-48 border-2 border-base-200 rounded-xl"
+      class="mt-4 gap-2 w-62 flex-col bg-base-200 p-1 min-h-48 border-2 border-base-200 rounded-xl mx-auto"
     >
       <p class="font-bold text-center">Selected Items</p>
       <ul class="flex gap-1 flex-wrap py-2">
@@ -127,7 +124,7 @@ onMounted(async () => {
     </div>
 
     <div
-      class="mt-4 gap-2 w-62 flex-col justify-center p-1 bg-base-300 border-2 border-base-200 rounded-xl"
+      class="mt-4 gap-2 w-62 flex-col justify-center p-1 bg-base-300 border-2 border-base-200 rounded-xl mx-auto min-h-48"
     >
       <div class="font-bold text-center">Completed Items</div>
       <ul class="flex gap-1 flex-wrap py-2">
