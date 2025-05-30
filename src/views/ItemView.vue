@@ -8,7 +8,7 @@ import LevelTable from '@/components/LevelTable.vue'
   <div class="grid grid-cols-1 px-32 py-4 gap-4 2xl:grid-cols-2">
     <div class="flex flex-wrap justify-center w-full">
       <div
-        class="justify-center w-full h-full mt-2 border-40 border-x-12 border-b-12 border-base-300 border-t-0 bg-base-100 rounded-lg backdrop-blur-2xl p-4 pt-0 px-0"
+        class="justify-center w-full mt-2 border-40 border-x-12 border-b-9 border-base-300 border-t-0 bg-base-100 rounded-lg backdrop-blur-2xl p-4 pt-0 px-0 box-border"
       >
         <h3 class="text-xl mb-2 font-bold w-full text-center bg-base-300 pb-4 pt-2">Item Mixer</h3>
         <div class="flex flex-col gap-2 w-fit mx-auto">
