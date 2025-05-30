@@ -7,10 +7,9 @@ const route = useRoute()
 
 const links = [
   { label: 'Home', path: '/' },
-
-  { label: 'Create a Sheet', path: '/create' },
-  { label: 'Dashboard', path: '/dashboard' },
   { label: 'Guides', path: '/guides' },
+  { label: 'Create a Sheet', path: '/create' },
+  { label: 'Your Sheets', path: '/dashboard' },
   { label: 'Quick Tools', path: '/items' },
 ]
 
@@ -49,12 +48,12 @@ const isActive = (p: string) => route.path === p
 
     <!-- Desktop links -->
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal gap-1 px-1">
+      <ul class="menu menu-horizontal gap-3 px-1">
         <li v-for="l in links" :key="l.path">
           <RouterLink
             :to="l.path"
-            class="px-3 py-2 rounded transition-colors duration-200 hover:underline text-md"
-            :class="{ 'bgtext-base-100 font-extrabold': isActive(l.path) }"
+            class="px-3 py-2 rounded transition-colors duration-200 hover:underline text-md decoration-2"
+            :class="{ 'bgtext-base-100 font-extrabold underline decoration-2': isActive(l.path) }"
           >
             {{ l.label }}
           </RouterLink>

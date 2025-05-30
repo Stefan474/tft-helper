@@ -62,7 +62,7 @@ function buildItem(item: CompletedItem) {
 
     <div class="bg-base-100">
       <div class="font-bold">Build Options</div>
-      <ul class="grid grid-cols-10 gap-1 grid-rows-5 min-h-52">
+      <ul class="grid grid-cols-10 gap-1 grid-rows-5">
         <li v-for="item in filteredItems" :key="item.id" class="relative" @click="buildItem(item)">
           <div
             class="avatar"
