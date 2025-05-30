@@ -36,7 +36,9 @@ const guideMode = ref(false)
             <h3 class="text-lg lg:text-2xl font-semibold mb-4 capitalize truncate flex-grow">
               {{ currentSheet?.compData.name }}
             </h3>
-            <div class="flex gap-2 flex-col md:flex-row mb-2 md:mb-0"></div>
+            <div class="flex gap-2 flex-col md:flex-row mb-2 md:mb-0">
+              <button class="btn btn-sm btn-secondary" @click="$emit('close')">Close Sheet</button>
+            </div>
           </div>
           <div class="bg-base-200 flex flex-col p-4 sm:p-6 flex-grow justify-center gap-4">
             <BoardGenerator
@@ -52,12 +54,6 @@ const guideMode = ref(false)
       <!-- ─── Leveling table ──────────────────────────────────── -->
       <div v-if="currentSheet" class="col-span-12 sm:col-span-12 lg:col-span-12 xl:col-span-5">
         <div class="bg-base-300 p-4 sm:p-6 lg:p-8 h-full rounded-xl relative">
-          <button
-            class="absolute top-0 right-0 bg-secondary text-black p-1.75 py-0.5 rounded-lg cursor-pointer"
-            @click="$emit('close')"
-          >
-            X
-          </button>
           <div class="flex">
             <h3 class="text-2xl mb-1 font-semibold flex-grow">Leveling Strategy</h3>
             <div class="flex align-bottom gap-2 flex-row-reverse mt-auto relative">

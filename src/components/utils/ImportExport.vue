@@ -145,7 +145,8 @@ async function importComps(key: string) {
         class="btn btn-secondary w-fit mt-4"
         @click="
           () => {
-            router.go(0)
+            if (router.currentRoute.value.name === 'dashboard') router.go(0)
+            router.push('/dashboard')
           }
         "
         v-if="isImported"

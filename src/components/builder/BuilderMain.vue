@@ -8,6 +8,7 @@ import { useCompositionStore } from '@/stores/compositionStore'
 import ReviewData from './ReviewData.vue'
 import router from '@/router'
 import { useItemStore } from '@/stores/itemStore'
+import ImportExport from '../utils/ImportExport.vue'
 
 export interface CompData {
   name: string
@@ -149,6 +150,8 @@ const skipStepTwo = ref(false)
 const tabTracker = ref(1)
 provide('tabTracker', tabTracker)
 const unlockTabs = ref(false)
+const showPhoneModal = ref(true)
+const showImport = ref(false)
 
 function changeTab(index: number) {
   if (index < tabTracker.value) {
@@ -392,6 +395,28 @@ function changeTab(index: number) {
           ></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div
+    class="lg:hidden fixed top-0 z-1000 inline-0 w-svw h-svh bg-base-300/80 flex justify-center"
+    v-if="showPhoneModal"
+  >
+    <div
+      class="bg-base-300 p-4 sm:p-6 lg:p-8 rounded-xl flex flex-col items-center gap-4 my-auto w-full h-fit"
+    >
+      <h3 class="font-semibold text-lg">Can't write cheat sheets on mobile yet :(</h3>
+      <p class="text-success">You still have options though!</p>
+      <div class="flex flex-col gap-3" v-if="!showImport">
+        <button class="btn btn-secondary" @click="router.push('/guides')">
+          Borrow one of ours
+        </button>
+        <button class="btn btn-primary" @click="showImport = true">Import from your PC</button>
+        <button class="btn btn-primary" @click="showPhoneModal = false">
+          I am on PC, leave me alone
+        </button>
+      </div>
+      <ImportExport type="import" v-if="showImport" />
     </div>
   </div>
 </template>
