@@ -7,10 +7,11 @@ const route = useRoute()
 
 const links = [
   { label: 'Home', path: '/' },
-  { label: 'Items', path: '/items' },
+
   { label: 'Create a Sheet', path: '/create' },
   { label: 'Dashboard', path: '/dashboard' },
   { label: 'Guides', path: '/guides' },
+  { label: 'Quick Tools', path: '/items' },
 ]
 
 const isActive = (p: string) => route.path === p

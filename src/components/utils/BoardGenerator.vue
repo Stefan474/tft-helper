@@ -51,6 +51,12 @@ const itemStore = useItemStore()
     >
       <div v-for="field in row" :key="field.x" class="relative w-16">
         <!-- clipped hex background + champion -->
+        <img
+          v-if="field.champion && field.champion.stars"
+          src="/assets/ux_images/3-star-asset_2.png"
+          class="absolute -top-0.25 left-4 w-8 z-40"
+        />
+
         <div
           class="hex bg-base-300 flex items-center justify-center text-sm font-bold border border-base-300"
         >
@@ -58,14 +64,10 @@ const itemStore = useItemStore()
             v-if="field.champion"
             :src="`/assets/tft-champion/${field.champion.asset_path}.png`"
             :alt="`${field.champion.name} icon`"
-            class="hex object-cover object-right h-full w-full scale-97"
+            class="hex object-cover object-right h-full w-full scale-95"
             :class="{ 'brightness-85': field.champion.stars }"
           />
-          <img
-            v-if="field.champion && field.champion.stars"
-            src="/assets/ux_images/3-star-asset_2.png"
-            class="absolute -top-0.25 w-8"
-          />
+
           <div
             v-if="field.champion"
             class="hex w-20 h-20 absolute top-0 -z-10"

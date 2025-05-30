@@ -160,11 +160,16 @@ const makeNewComp = () => {
   </div>
   <div class="flex justify-center items-center w-full h-120" v-if="!activeSheet">
     <div class="bg-base-300 p-6 sm:p-8 rounded-xl flex flex-col items-center gap-4">
-      <h3 class="text-2xl font-semibold">No comp selected</h3>
-      <p class="text-md text-center">You need to create a comp first.</p>
+      <h3 class="text-2xl font-semibold">You have no cheat sheets!</h3>
+      <p class="text-md text-center">Here's a few ways to get some, I got you.</p>
       <div class="flex flex-col gap-4">
-        <button class="btn btn-secondary" @click="makeNewComp">Make a new comp</button>
-        <button class="btn btn-primary" @click="showImport = true">Import sheets</button>
+        <button class="btn btn-primary" @click="router.push('/guides')">
+          Popular cheat sheets
+        </button>
+        <button class="btn btn-secondary hidden lg:block" @click="makeNewComp">
+          Make your own
+        </button>
+        <button class="btn btn-primary" @click="showImport = true">Import from code</button>
       </div>
     </div>
   </div>

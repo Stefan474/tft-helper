@@ -5,17 +5,23 @@ import type { CheatSheetWithItems } from '@/stores/compositionStore'
 import { useItemStore, type CompletedItem } from '@/stores/itemStore'
 import { supabase } from '@/supabase'
 import DashboardGenerator from '@/components/utils/DashboardGenerator.vue'
+import ItemPreviewWindow from '@/components/items/ItemPreviewWindow.vue'
 
 const compositionStore = useCompositionStore()
 const guideKey: string = 'FAEv7bNjetFGS0EsFlTOZZb3cB4VjixL' //change to the current guide key
 const isImported = ref(false)
 const importError = ref(false)
 const guideSheetList = ref<CheatSheetWithItems[]>([])
+const currentItem = ref<CompletedItem>()
+const currentSheetIndex = ref('')
+const currentChampion = ref('')
+const currentSlot = ref('')
 
 const itemStore = useItemStore()
 const itemData = ref<CompletedItem[]>([])
 const currentSheet = ref<CheatSheetWithItems>()
 const showDashboard = ref(false)
+const showItemPreview = ref(false)
 
 //import handling
 async function importComps(key: string = guideKey) {
@@ -148,7 +154,9 @@ function addSheet(sheet: CheatSheetWithItems) {
                 </div>
 
                 <div class="bg-base-100 rounded-lg p-2 pt-0.5 pl-1">
-                  <ul class="flex flex-wrap justify-start gap-4 py-1">
+                  <ul
+                    class="flex flex-wrap md:justify-start gap-4 py-1 justify-center pt-2 lg:pt-1"
+                  >
                     <li
                       v-for="field in sheet.board
                         .filter((f) => f.champion)
@@ -162,6 +170,11 @@ function addSheet(sheet: CheatSheetWithItems) {
                       :key="field.x"
                     >
                       <div class="relative">
+                        <img
+                          v-if="field.champion && field.champion.stars"
+                          src="/assets/ux_images/3-star-asset_2.png"
+                          class="absolute top-0 left-3.5 origin-center w-9 opacity-90 z-40"
+                        />
                         <div
                           v-if="field.champion"
                           class="hex w-full h-full absolute top-0"
@@ -177,20 +190,30 @@ function addSheet(sheet: CheatSheetWithItems) {
                         <img
                           :src="'/assets/tft-champion/' + field.champion!.asset_path + '.png'"
                           alt="Champion Image"
-                          class="hex w-16 h-16 object-cover object-right scale-95 origin-center"
+                          class="hex h-16 object-cover object-right scale-95 origin-center"
                           :class="{ 'brightness-80': field.champion!.stars }"
                         />
-                        <img
-                          v-if="field.champion && field.champion.stars"
-                          src="/assets/ux_images/3-star-asset_2.png"
-                          class="absolute top-0 left-3.5 origin-center w-9 opacity-90"
-                        />
+
                         <div
                           class="w-16 h-6 absolute bottom-[-10px] left-0 grid grid-cols-3 gap-1"
                           v-if="field.champion?.itemIds.some((id) => id !== 999)"
                         >
                           <!-- Slot 1 -->
-                          <div class="bg-gray-800 border-primary border-1 w-5.5 h-5.5">
+                          <div
+                            class="bg-gray-800 border-primary border-1 w-5.5 h-5.5"
+                            @mouseenter="
+                              {
+                                ;(showItemPreview = true),
+                                  (currentItem = itemData.find(
+                                    (i) => i.id === field.champion?.itemIds[0],
+                                  )),
+                                  (currentSheetIndex = sheet.compData.name),
+                                  (currentChampion = field.champion?.name),
+                                  (currentSlot = 'Slot 1')
+                              }
+                            "
+                            @mouseleave="showItemPreview = false"
+                          >
                             <img
                               v-if="
                                 field.champion?.itemIds[0] && field.champion?.itemIds[0] !== 999
@@ -203,6 +226,22 @@ function addSheet(sheet: CheatSheetWithItems) {
                               alt="Item Image"
                               class="w-full h-full object-cover rounded-xl"
                             />
+                            <div
+                              v-if="
+                                showItemPreview &&
+                                currentItem?.id === field.champion?.itemIds[0] &&
+                                currentSheetIndex === sheet.compData.name &&
+                                currentChampion === field.champion?.name &&
+                                currentSlot === 'Slot 1'
+                              "
+                            >
+                              <ItemPreviewWindow
+                                :item="itemData.find((i) => i.id === field.champion?.itemIds[0])"
+                                :champion="field.champion"
+                                :showWindow="!showItemPreview"
+                                class="z-1000"
+                              />
+                            </div>
                           </div>
 
                           <!-- Slot 2 -->
@@ -218,7 +257,35 @@ function addSheet(sheet: CheatSheetWithItems) {
                               "
                               alt="Item Image"
                               class="w-full h-full object-cover rounded-xl"
+                              @mouseenter="
+                                {
+                                  ;(showItemPreview = true),
+                                    (currentItem = itemData.find(
+                                      (i) => i.id === field.champion?.itemIds[1],
+                                    )),
+                                    (currentSheetIndex = sheet.compData.name),
+                                    (currentChampion = field.champion?.name),
+                                    (currentSlot = 'Slot 2')
+                                }
+                              "
+                              @mouseleave="showItemPreview = false"
                             />
+                            <div
+                              v-if="
+                                showItemPreview &&
+                                currentItem?.id === field.champion?.itemIds[1] &&
+                                currentSheetIndex === sheet.compData.name &&
+                                currentChampion === field.champion?.name &&
+                                currentSlot === 'Slot 2'
+                              "
+                            >
+                              <ItemPreviewWindow
+                                :item="itemData.find((i) => i.id === field.champion?.itemIds[1])"
+                                :champion="field.champion"
+                                :showWindow="!showItemPreview"
+                                class="z-1000"
+                              />
+                            </div>
                           </div>
 
                           <!-- Slot 3 -->
@@ -234,7 +301,35 @@ function addSheet(sheet: CheatSheetWithItems) {
                               "
                               alt="Item Image"
                               class="w-full h-full object-cover rounded-xl"
+                              @mouseenter="
+                                {
+                                  ;(showItemPreview = true),
+                                    (currentItem = itemData.find(
+                                      (i) => i.id === field.champion?.itemIds[2],
+                                    )),
+                                    (currentSheetIndex = sheet.compData.name),
+                                    (currentChampion = field.champion?.name),
+                                    (currentSlot = 'Slot 3')
+                                }
+                              "
+                              @mouseleave="showItemPreview = false"
                             />
+                            <div
+                              v-if="
+                                showItemPreview &&
+                                currentItem?.id === field.champion?.itemIds[2] &&
+                                currentSheetIndex === sheet.compData.name &&
+                                currentChampion === field.champion?.name &&
+                                currentSlot === 'Slot 3'
+                              "
+                            >
+                              <ItemPreviewWindow
+                                :item="itemData.find((i) => i.id === field.champion?.itemIds[2])"
+                                :champion="field.champion"
+                                :showWindow="!showItemPreview"
+                                class="z-1000"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>

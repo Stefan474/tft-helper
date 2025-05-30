@@ -274,20 +274,16 @@ function nextStep() {
         <img
           v-if="field.champion && field.champion.stars"
           src="/assets/ux_images/3-star-asset_2.png"
-          class="absolute top-0 w-8"
+          class="absolute top-10 w-8 z-100"
         />
         <img
           v-if="field.champion"
           :src="'/assets/tft-champion/' + field.champion.asset_path + '.png'"
           :alt="field.champion.name + ' champion icon'"
           class="object-cover object-right h-full w-full scale-95 origin-center hex"
-          :class="{ 'brightness-85': field.champion.stars }"
+          :class="{ 'brightness-80': field.champion.stars }"
         />
-        <img
-          v-if="field.champion && field.champion.stars"
-          src="/assets/ux_images/3-star-asset_2.png"
-          class="absolute top-0 w-8"
-        />
+
         <div
           v-if="field.champion"
           class="hex w-20 h-20 absolute top-0 -z-10"

@@ -151,9 +151,9 @@ function nextStep() {
           <img
             v-if="field.champion && field.champion.stars"
             src="/assets/ux_images/3-star-asset_2.png"
-            class="absolute -top-2 left-6.5 origin-center w-11"
+            class="absolute -top-0.5 left-6.5 origin-center w-11"
           />
-          <div class="w-24 h-8 absolute bottom-[-10px] left-0 grid grid-cols-3 gap-1">
+          <div class="w-24 h-8 absolute bottom-[-15px] left-0 grid grid-cols-3 gap-1">
             <!-- Slot 1 -->
             <div
               class="bg-gray-800 border-primary border-2 w-8 h-full"

@@ -9,7 +9,7 @@ import TwoCostRerollTable from './leveling-tables/TwoCostRerollTable.vue'
 import { ref } from 'vue'
 
 //ref for the description toggle that governs every single table's details, bound to the 'toggle details' button
-const isDescriptionVisible = ref(false)
+const isDescriptionVisible = ref(true)
 </script>
 
 <template>
@@ -23,12 +23,6 @@ const isDescriptionVisible = ref(false)
           type="button"
           class="btn btn-primary"
           value="Toggle details"
-          @click="isDescriptionVisible = !isDescriptionVisible"
-        />
-        <input
-          type="button"
-          class="btn btn-primary"
-          value="Roll % chance"
           @click="isDescriptionVisible = !isDescriptionVisible"
         />
       </div>

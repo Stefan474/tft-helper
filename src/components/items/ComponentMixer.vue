@@ -54,7 +54,7 @@ onMounted(async () => {
 
 <template>
   <p class="">Components</p>
-  <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center">
+  <div v-if="showSelectedItems" class="p-4 h-full w-full flex justify-center bg-base-100">
     <div v-if="loading" class="flex justify-center py-8">
       <!-- conditional loading until data is fetched-->
       <span className="loading loading-bars loading-lg"></span>
