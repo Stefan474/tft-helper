@@ -14,7 +14,7 @@ const guideMode = ref(false)
 
 <template>
   <div
-    class="px-4 sm:px-8 lg:px-32 py-4 my-auto w-full"
+    class="px-2 sm:px-8 lg:px-32 py-4 my-auto w-full"
     v-if="currentSheet"
     @click.self="$emit('close')"
   >
@@ -29,7 +29,7 @@ const guideMode = ref(false)
       <!-- ─── Board / items card ─────────────────────────────── -->
       <div class="bg-base-300 flex justify-center col-span-12 2xl:col-span-7 2xl:col-start-1">
         <div
-          class="bg-base-300 p-4 sm:p-6 2xl:p-8 flex flex-col w-full rounded-xl"
+          class="bg-base-300 p-2 sm:p-6 2xl:p-8 flex flex-col w-full rounded-xl"
           :class="{ 'h-fit': guideMode }"
         >
           <div class="flex align-middle justify-center">
@@ -40,7 +40,7 @@ const guideMode = ref(false)
               <button class="btn btn-sm btn-secondary" @click="$emit('close')">Close Sheet</button>
             </div>
           </div>
-          <div class="bg-base-200 flex flex-col p-4 sm:p-6 flex-grow justify-center gap-4">
+          <div class="bg-base-200 flex flex-col p-2 sm:p-6 flex-grow justify-center gap-4">
             <BoardGenerator
               v-if="currentSheet"
               :board="currentSheet.board"
