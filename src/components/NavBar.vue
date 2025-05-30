@@ -102,7 +102,7 @@ const isActive = (p: string) => route.path === p
   <transition name="slide-fade">
     <ul
       v-if="mobileOpen"
-      class="menu menu-vertical lg:hidden w-full bg-base-100 rounded-b-box p-2 shadow mt-1"
+      class="menu menu-vertical lg:hidden w-full bg-base-100 rounded-b-box p-2 shadow mt-1 sticky top-15 z-2000"
     >
       <li v-for="l in links" :key="l.path">
         <RouterLink
