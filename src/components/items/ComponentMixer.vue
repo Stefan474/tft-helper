@@ -98,7 +98,10 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div v-if="showSelectedItems" class="grid grid-cols-1 grid-flow-row gap-4 lg:grid-cols-2">
+  <div
+    v-if="showSelectedItems"
+    class="grid grid-cols-1 grid-flow-row gap-4 lg:grid-cols-2 w-fit mx-auto"
+  >
     <div
       class="mt-4 gap-2 w-62 flex-col bg-base-200 p-1 min-h-48 border-2 border-base-200 rounded-xl mx-auto"
     >
