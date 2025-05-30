@@ -141,16 +141,17 @@ const makeNewComp = () => {
         <div
           v-for="sheet in compositionStore.allSavedSheets"
           :key="sheet.compData.name"
-          class="bg-base-200 p-3 rounded hover:bg-base-100 cursor-pointer transition flex"
+          class="bg-base-100 border-secondary border-1 py-0 p-3 pl-0 rounded-lg hover:bg-base-100 hover:brightness-110 cursor-pointer transition flex"
         >
-          <div class="flex-grow h-full" @click="(setCurrentSheet(sheet), (showPicker = false))">
-            {{ sheet.compData.name }}
-          </div>
-          <div
-            class="bg-primary text-black rounded-lg px-2"
-            @click="(deleteSheet(sheet), (showPicker = true))"
-          >
-            X
+          <img
+            :src="`/assets/tft-champion/${sheet.board.find((cell) => cell.champion)?.champion?.asset_path}.png`"
+            class="w-16 object-cover object-right rounded-l-lg"
+          />
+          <div class="py-3 flex pl-3 w-full">
+            <div class="flex-grow h-full" @click="(setCurrentSheet(sheet), (showPicker = false))">
+              {{ sheet.compData.name }}
+            </div>
+            <div class="bg-primary text-black rounded-lg px-3" @click="deleteSheet(sheet)">X</div>
           </div>
         </div>
 
