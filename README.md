@@ -1,4 +1,4 @@
-# TFT Helper 🛠️  
+# TFT Helper 
 _Simplify how you think about Teamfight Tactics and focus on playing instead of juggling different guide sites._
 
 [Live demo → tft-helper-sepia.vercel.app](https://tft-helper-sepia.vercel.app)   |  
