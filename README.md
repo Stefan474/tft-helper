@@ -1,14 +1,14 @@
 # TFT Helper 
 _Simplify how you think about Teamfight Tactics and focus on playing instead of juggling different guide sites._
 
-[Live demo → tft-helper-sepia.vercel.app](https://tft-helper-sepia.vercel.app)   |  
+[Live demo → tft-helper-sepia.vercel.app](https://tft-helper-sepia.vercel.app)     
 Built with **Vue 3 + TypeScript + Supabase + Tailwind** and deployed on **Vercel**.
 
 ---
 
 ## ✨ Features
 
-| Area | What it does |
+| Feature | What it does |
 |------|--------------|
 | **Cheat-sheet builder** | Drag-and-drop champions & items onto a virtual board, then save the comp to your account. |
 | **Import / Export** | One-click JSON import & export share keys so friends can load your board instantly. |
