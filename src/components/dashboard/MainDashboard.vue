@@ -63,7 +63,7 @@ const makeNewComp = () => {
 </script>
 
 <template>
-  <div class="w-full bg-base-100 px-4 sm:px-8 lg:px-32 py-4" v-if="activeSheet">
+  <div class="w-full bg-base-100 px-1 sm:px-8 lg:px-32 py-4" v-if="activeSheet">
     <!-- responsive grid -->
     <div
       class="grid gap-4 sm:gap-6 lg:gap-8"
@@ -75,7 +75,7 @@ const makeNewComp = () => {
       <!-- ─── Board / items card ─────────────────────────────── -->
       <div class="flex justify-center col-span-12 xl:col-span-7 2xl:col-span-6 2xl:col-start-2">
         <div
-          class="bg-base-300 p-4 sm:p-6 2xl:p-8 flex flex-col w-full rounded-xl"
+          class="bg-base-300 p-2 sm:p-6 2xl:p-8 flex flex-col w-full rounded-xl"
           :class="{ 'h-fit': guideMode }"
         >
           <div class="flex align-middle justify-center">
